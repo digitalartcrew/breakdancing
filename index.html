@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BreaksR4Kidz – Honolulu</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
+    />
+    <style>
+      :root {
+        --black: #000;
+        --red: #e60000;
+        --yellow: #ffc800;
+        --white: #fff;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Rubik", sans-serif;
+      }
+
+      body {
+        background-color: var(--white);
+        color: var(--black);
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: var(--black);
+        color: var(--white);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+        color: var(--yellow);
+      }
+
+      nav a {
+        margin-left: 1.5rem;
+        color: var(--white);
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .hero {
+        background: url("./img/kidsdancing.png") center/cover no-repeat;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        text-align: center;
+        padding-top: 60px;
+      }
+
+      .hero h2 {
+        font-size: 2.5rem;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 1rem 2rem;
+        border-radius: 8px;
+      }
+
+      section {
+        padding: 3rem 2rem;
+      }
+
+      .about,
+      .events,
+      .contact {
+        max-width: 960px;
+        margin: auto;
+      }
+
+      .about h2,
+      .events h2,
+      .contact h2 {
+        color: var(--red);
+        margin-bottom: 1rem;
+      }
+
+      .events ul {
+        list-style-type: none;
+      }
+
+      .events li {
+        margin-bottom: 0.5rem;
+      }
+
+      .contact form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .contact input,
+      .contact textarea {
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        border: 2px solid var(--black);
+        border-radius: 5px;
+      }
+
+      .contact button {
+        background: var(--yellow);
+        border: none;
+        padding: 1rem;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .contact button:hover {
+        background: var(--red);
+        color: var(--white);
+      }
+
+      footer {
+        background: var(--black);
+        color: var(--white);
+        text-align: center;
+        padding: 1rem;
+      }
+
+      .instagram {
+        display: inline-block;
+        margin-top: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        nav {
+          margin-top: 0.5rem;
+        }
+
+        .hero h2 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>BreaksR4Kidz</h1>
+      <nav>
+        <a href="#about">About</a>
+        <a href="#events">Events</a>
+        <a href="#contact">Contact</a>
+        <a href="https://www.instagram.com/breaksr4kidzhi" target="_blank"
+          >Instagram</a
+        >
+      </nav>
+    </header>
+
+    <div class="hero">
+      <h2>Youth Breakdancing in Honolulu, HI<br />Coached by Tom Solo</h2>
+    </div>
+
+    <section id="about" class="about">
+      <h2>About Us</h2>
+      <p>
+        BreaksR4Kidz is a youth breakdancing organization based in Honolulu, HI
+        that provides free breakdancing classes to youth. Led by Coach Tom Solo,
+        our mission is to empower kids through dance, build confidence, and
+        develop discipline through the art of breaking.
+      </p>
+      <p>
+        Classes are open to all skill levels and offer a safe, positive
+        environment for learning, expression, and fun.
+      </p>
+    </section>
+
+    <section id="events" class="events">
+      <h2>Upcoming Events</h2>
+      <ul>
+        <li>
+          <strong>May 31:</strong> Junior Olympic Qualifier at St. Theresa
+          School
+        </li>
+        <li>
+          <strong>June 15:</strong> Summer Break Jam Session (Ala Moana Park)
+        </li>
+        <li>
+          <strong>July 10:</strong> Parent & Youth Info Night (Kaimuki Community
+          Center)
+        </li>
+      </ul>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2>Contact Us</h2>
+      <p>
+        Interested in signing up your child or learning more about the program?
+        Fill out the form below:
+      </p>
+      <form
+        onsubmit="event.preventDefault(); alert('Thank you! We’ll be in touch soon.');"
+      >
+        <input type="text" placeholder="Name" required />
+        <input type="email" placeholder="Email" required />
+        <textarea rows="4" placeholder="Message or Questions"></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </section>
+
+    <footer>
+      &copy; 2025 BreaksR4Kidz | Powered by the Community | Designed for the
+      Youth
+      <div class="instagram">
+        <a
+          href="https://www.instagram.com/breaksr4kidzhi"
+          target="_blank"
+          style="color: var(--yellow); text-decoration: none"
+          >Follow us on Instagram</a
+        >
+      </div>
+    </footer>
+  </body>
+</html>
