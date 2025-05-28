@@ -4,10 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BreaksR4Kidz – Honolulu</title>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" />
     <style>
       :root {
         --black: #000;
@@ -27,6 +24,7 @@
         background-color: var(--white);
         color: var(--black);
         line-height: 1.6;
+        font-size: 1.25rem;
       }
 
       header {
@@ -55,7 +53,7 @@
       }
 
       .hero {
-        background: url("./img/kidsdancing.png") center/cover no-repeat;
+        background: url("https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/kidsdancing_icv4nk.png") center/cover no-repeat;
         height: 100vh;
         display: flex;
         align-items: center;
@@ -70,6 +68,59 @@
         background-color: rgba(0, 0, 0, 0.6);
         padding: 1rem 2rem;
         border-radius: 8px;
+      }
+
+      .highlight-section {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        padding: 3rem 2rem;
+        background-color: #f5f5f5;
+      }
+
+      .highlight {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .highlight:nth-child(even) {
+        flex-direction: row-reverse;
+        background-color: #691316;
+        color: #fff;
+      }
+
+      .highlight:nth-child(odd) {
+        background-color: #f1c129;
+      }
+
+      .highlight img {
+        width: 45%;
+        border-radius: 12px;
+      }
+
+      .highlight p {
+        font-size: 3rem;
+        font-weight: 500;
+        flex: 1;
+        padding: 1rem;
+      }
+
+      .parallax {
+        background-image: url('https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/parallax-bg.jpg');
+        min-height: 400px;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px #000;
       }
 
       section {
@@ -151,6 +202,14 @@
         .hero h2 {
           font-size: 1.5rem;
         }
+
+        .highlight {
+          flex-direction: column !important;
+        }
+
+        .highlight img {
+          width: 100%;
+        }
       }
     </style>
   </head>
@@ -161,9 +220,7 @@
         <a href="#about">About</a>
         <a href="#events">Events</a>
         <a href="#contact">Contact</a>
-        <a href="https://www.instagram.com/breaksr4kidzhi" target="_blank"
-          >Instagram</a
-        >
+        <a href="https://www.instagram.com/breaksr4kidzhi" target="_blank">Instagram</a>
       </nav>
     </header>
 
@@ -171,46 +228,54 @@
       <h2>Youth Breakdancing in Honolulu, HI<br />Coached by Tom Solo</h2>
     </div>
 
+    <section class="highlight-section">
+      <div class="highlight">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/discipline_apbalo.png" alt="Discipline" />
+        <p>Breakdancing teaches kids discipline and focus.</p>
+      </div>
+      <div class="highlight">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/teamwork_vtlopj.png" alt="Teamwork" />
+        <p>Working together builds a strong sense of community.</p>
+      </div>
+      <div class="highlight">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/confidence_lbqlpx.png" alt="Confidence" />
+        <p>Performing boosts confidence and self-esteem.</p>
+      </div>
+      <div class="highlight">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/fitness_yxyqc5.png" alt="Fitness" />
+        <p>It’s a fun way to stay physically active and healthy.</p>
+      </div>
+      <div class="highlight">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/expression_bysa6p.png" alt="Expression" />
+        <p>Encourages artistic expression through movement.</p>
+      </div>
+      <div class="highlight">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/culture_gkekcl.png" alt="Culture" />
+        <p>Introduces youth to hip hop culture and its roots.</p>
+      </div>
+    </section>
+
+    <div class="parallax">BreaksR4Kidz Movement</div>
+
     <section id="about" class="about">
       <h2>About Us</h2>
-      <p>
-        BreaksR4Kidz is a youth breakdancing organization based in Honolulu, HI
-        that provides breakdancing classes to youth. Led by Coach Tom Solo, our
-        mission is to empower kids through dance, build confidence, and develop
-        discipline through the art of breaking.
-      </p>
-      <p>
-        Classes are open to all skill levels and offer a safe, positive
-        environment for learning, expression, and fun.
-      </p>
+      <p>BreaksR4Kidz is a youth breakdancing organization based in Honolulu, HI that provides breakdancing classes to youth. Led by Coach Tom Solo, our mission is to empower kids through dance, build confidence, and develop discipline through the art of breaking.</p>
+      <p>Classes are open to all skill levels and offer a safe, positive environment for learning, expression, and fun.</p>
     </section>
 
     <section id="events" class="events">
       <h2>Upcoming Events</h2>
       <ul>
-        <li>
-          <strong>May 31:</strong> Junior Olympic Qualifier at St. Theresa
-          School
-        </li>
-        <li>
-          <strong>June 15:</strong> Summer Break Jam Session (Ala Moana Park)
-        </li>
-        <li>
-          <strong>July 10:</strong> Parent & Youth Info Night (Kaimuki Community
-          Center)
-        </li>
+        <li><strong>May 31:</strong> Junior Olympic Qualifier at St. Theresa School</li>
+        <li><strong>June 15:</strong> Summer Break Jam Session (Ala Moana Park)</li>
+        <li><strong>July 10:</strong> Parent & Youth Info Night (Kaimuki Community Center)</li>
       </ul>
     </section>
 
     <section id="contact" class="contact">
       <h2>Contact Us</h2>
-      <p>
-        Interested in signing up your child or learning more about the program?
-        Fill out the form below:
-      </p>
-      <form
-        onsubmit="event.preventDefault(); alert('Thank you! We’ll be in touch soon.');"
-      >
+      <p>Interested in signing up your child or learning more about the program? Fill out the form below:</p>
+      <form onsubmit="event.preventDefault(); alert('Thank you! We’ll be in touch soon.');">
         <input type="text" placeholder="Name" required />
         <input type="email" placeholder="Email" required />
         <textarea rows="4" placeholder="Message or Questions"></textarea>
@@ -219,15 +284,9 @@
     </section>
 
     <footer>
-      &copy; 2025 BreaksR4Kidz | Powered by the Community | Designed for the
-      Youth
+      &copy; 2025 BreaksR4Kidz | Powered by the Community | Designed for the Youth
       <div class="instagram">
-        <a
-          href="https://www.instagram.com/breaksr4kidzhi"
-          target="_blank"
-          style="color: var(--yellow); text-decoration: none"
-          >Follow us on Instagram</a
-        >
+        <a href="https://www.instagram.com/breaksr4kidzhi" target="_blank" style="color: var(--yellow); text-decoration: none">Follow us on Instagram</a>
       </div>
     </footer>
   </body>
