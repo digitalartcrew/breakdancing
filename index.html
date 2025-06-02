@@ -70,6 +70,26 @@
         padding-top: 60px;
       }
 
+      .hero-video-container {
+        max-width: 90%;
+        width: 720px;
+        margin: 2rem auto;
+      }
+
+      .hero-video {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+      }
+
+      .video-caption {
+        margin-top: 0.5rem;
+        font-style: italic;
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+      }
+
+
       .hero h2 {
         font-size: 2.5rem;
         font-family: "Rock Salt", cursive;
@@ -236,7 +256,22 @@
 
     <div class="hero">
       <h2>Youth Breakdancing in Honolulu, HI<br />Coached by Tom Solo</h2>
+
     </div>
+
+    <div class="hero-video-container">
+      <figure>
+        <video controls class="hero-video">
+          <source src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1748892317/IMG_5191_slz1wr.mov" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <figcaption class="video-caption">
+          Youth breakdancers in action at a recent BreaksR4Kidz session.
+        </figcaption>
+      </figure>
+    </div>
+
+
 
     <section class="highlight-section">
       <div class="highlight">
@@ -276,7 +311,7 @@
     <section id="events" class="events">
       <h2>Upcoming Events</h2>
       <ul>
-        <li><strong>May 31:</strong> Junior Olympic Qualifier at St. Theresa School</li>
+        <!-- <li><strong>May 31:</strong> Junior Olympic Qualifier at St. Theresa School</li> -->
         <li><strong>June 15:</strong> Summer Break Jam Session (Ala Moana Park)</li>
         <li><strong>July 10:</strong> Parent & Youth Info Night (Kaimuki Community Center)</li>
       </ul>
