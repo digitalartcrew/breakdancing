@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" />
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
       :root {
@@ -50,6 +50,10 @@
         color: var(--yellow);
       }
 
+      nav {
+        display: flex;
+      }
+
       nav a {
         margin-left: 1.5rem;
         color: var(--white);
@@ -57,6 +61,13 @@
         font-weight: bold;
         font-size: 1rem;
         font-family: "Rock Salt", cursive;
+      }
+
+      .hamburger_menu {
+        display: none;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: var(--yellow);
       }
 
       .hero {
@@ -242,16 +253,32 @@
         color: #333;
       }
 
-
-
       @media (max-width: 768px) {
-        header {
-          flex-direction: column;
-          align-items: flex-start;
+        .hamburger_menu {
+          display: block;
         }
 
         nav {
-          margin-top: 0.5rem;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background-color: var(--black);
+          flex-direction: column;
+          align-items: center;
+          padding: 1rem 0;
+          display: none;
+        }
+
+        nav.active {
+          display: flex;
+        }
+
+        nav a {
+          margin: 0.5rem 0;
+          padding: 0.5rem 1rem;
+          width: 100%;
+          text-align: center;
         }
 
         .hero h2 {
@@ -271,7 +298,10 @@
   <body>
     <header>
       <h1>BreaksR4Kidz</h1>
-      <nav>
+      <div class="hamburger_menu" id="hamburger_menu">
+        <i class="fas fa-bars"></i>
+      </div>
+      <nav id="nav">
         <a href="#about">About</a>
         <a href="#events">Events</a>
         <a href="#contact">Contact</a>
@@ -283,7 +313,6 @@
 
     <div class="hero">
       <h2>Youth Breakdancing in Honolulu, HI<br />Coached by Tom Solo</h2>
-
     </div>
 
     <div class="hero-video-container">
@@ -297,8 +326,6 @@
         </figcaption>
       </figure>
     </div>
-
-
 
     <section class="highlight-section">
       <div class="highlight">
@@ -315,7 +342,7 @@
       </div>
       <div class="highlight">
         <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/fitness_yxyqc5.png" alt="Fitness" />
-        <p>It’s a fun way to stay physically active and healthy.</p>
+        <p>It's a fun way to stay physically active and healthy.</p>
       </div>
       <div class="highlight">
         <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/confidence_lbqlpx.png" alt="Confidence" />
@@ -344,7 +371,6 @@
       </ul>
     </section>
 
-
     <section class="responsive-centered-section schedule" id="schedule">
       <h2>Class Schedule</h2>
       <figure>
@@ -359,18 +385,6 @@
       </figure>
     </section>
     
-    
-
-    <!-- <section id="contact" class="contact">
-      <h2>Contact Us</h2>
-      <p>Interested in signing up your child or learning more about the program? Fill out the form below:</p>
-      <form onsubmit="event.preventDefault(); alert('Thank you! We’ll be in touch soon.');">
-        <input type="text" placeholder="Name" required />
-        <input type="email" placeholder="Email" required />
-        <textarea rows="4" placeholder="Message or Questions"></textarea>
-        <button type="submit">Submit</button>
-      </form>
-    </section> -->
     <section id="contact" class="contact">
       <h2>Contact Us</h2>
       <p>If you have any questions or want to learn more about the program, feel free to email us directly.</p>
@@ -383,5 +397,21 @@
         <a href="https://www.instagram.com/breaksr4kidzhi" target="_blank" style="color: var(--yellow); text-decoration: none">Follow us on Instagram</a>
       </div>
     </footer>
+
+    <script>
+      document.getElementById('hamburger_menu').addEventListener('click', function() {
+        const nav = document.getElementById('nav');
+        nav.classList.toggle('active');
+        
+        const icon = this.querySelector('i');
+        if (nav.classList.contains('active')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        } else {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      });
+    </script>
   </body>
 </html>
