@@ -397,21 +397,27 @@
         <a href="https://www.instagram.com/breaksr4kidzhi" target="_blank" style="color: var(--yellow); text-decoration: none">Follow us on Instagram</a>
       </div>
     </footer>
+<script>
+  const hamburgerMenu = document.getElementById('hamburger_menu');
+  const nav = document.getElementById('nav');
+  const icon = hamburgerMenu.querySelector('i');
+  const navLinks = nav.querySelectorAll('a');
 
-    <script>
-      document.getElementById('hamburger_menu').addEventListener('click', function() {
-        const nav = document.getElementById('nav');
-        nav.classList.toggle('active');
-        
-        const icon = this.querySelector('i');
-        if (nav.classList.contains('active')) {
-          icon.classList.remove('fa-bars');
-          icon.classList.add('fa-times');
-        } else {
-          icon.classList.remove('fa-times');
-          icon.classList.add('fa-bars');
-        }
-      });
-    </script>
+  hamburgerMenu.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    icon.classList.toggle('fa-bars');
+    icon.classList.toggle('fa-times');
+  });
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768 && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+  });
+</script>
   </body>
 </html>
