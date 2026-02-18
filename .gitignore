@@ -1,0 +1,6 @@
+# Large media files — host these on Cloudinary or another CDN instead
+*.MOV
+*.mov
+*.mp4
+*.HEIC
+*.heic

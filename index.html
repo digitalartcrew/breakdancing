@@ -29,8 +29,10 @@
         color: var(--black);
         line-height: 1.6;
         font-size: 1.25rem;
+        overflow-x: hidden;
       }
 
+      /* ---- HEADER ---- */
       header {
         background-color: var(--black);
         color: var(--white);
@@ -46,13 +48,18 @@
       }
 
       header h1 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         color: var(--yellow);
+        letter-spacing: 2px;
+        animation: headerPop 0.6s ease;
       }
 
-      nav {
-        display: flex;
+      @keyframes headerPop {
+        0%   { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1);   opacity: 1; }
       }
+
+      nav { display: flex; }
 
       nav a {
         margin-left: 1.5rem;
@@ -61,6 +68,13 @@
         font-weight: bold;
         font-size: 1rem;
         font-family: "Rock Salt", cursive;
+        transition: color 0.2s, transform 0.2s;
+        display: inline-block;
+      }
+
+      nav a:hover {
+        color: var(--yellow);
+        transform: scale(1.12);
       }
 
       .hamburger_menu {
@@ -70,102 +84,131 @@
         color: var(--yellow);
       }
 
+      /* ---- HERO ---- */
       .hero {
         background: url("https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/kidsdancing_icv4nk.png") center/cover no-repeat;
         height: 100vh;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         color: var(--white);
         text-align: center;
         padding-top: 60px;
+        position: relative;
+        overflow: hidden;
       }
 
-      .hero-video-container {
-        max-width: 90%;
-        width: 720px;
-        margin: 2rem auto;
+      .hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
       }
 
-      .hero-video {
-        width: 100%;
-        height: auto;
-        border-radius: 12px;
+      .hero-content {
+        position: relative;
+        z-index: 1;
       }
-
-      .video-caption {
-        margin-top: 0.5rem;
-        font-style: italic;
-        color: #fff;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-      }
-
 
       .hero h2 {
         font-size: 2.5rem;
         font-family: "Rock Salt", cursive;
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(0, 0, 0, 0.65);
         padding: 1rem 2rem;
         border-radius: 8px;
+        border: 3px solid var(--yellow);
+        animation: heroBounce 0.8s ease-out;
       }
 
-      .highlight-section {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-        padding: 3rem 2rem;
-        background-color: #f5f5f5;
-      }
-
-      .highlight {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 2rem;
-      }
-
-      .highlight:nth-child(even) {
-        flex-direction: row-reverse;
-        background-color: #691316;
-        color: #fff;
-      }
-
-      .highlight:nth-child(odd) {
-        background-color: #f1c129;
-      }
-
-      .highlight img {
-        width: 45%;
-        border-radius: 12px;
-      }
-
-      .highlight p {
-        font-size: 2.5rem;
-        font-weight: 500;
-        flex: 1;
-        padding: 1rem;
+      .hero-sub {
+        margin-top: 1.2rem;
         font-family: 'Bangers', cursive;
-      }
-
-      .parallax {
-        background-image: url('https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/parallax-bg.jpg');
-        min-height: 400px;
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
         font-size: 2rem;
-        font-weight: bold;
-        text-shadow: 2px 2px 4px #000;
+        color: var(--yellow);
+        letter-spacing: 4px;
+        animation: fadeInUp 1s ease 0.4s both;
       }
 
-      section {
-        padding: 3rem 2rem;
+      .hero-cta {
+        margin-top: 1.5rem;
+        animation: fadeInUp 1s ease 0.8s both;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
       }
+
+      @keyframes heroBounce {
+        0%   { transform: translateY(-40px); opacity: 0; }
+        60%  { transform: translateY(10px); }
+        100% { transform: translateY(0);    opacity: 1; }
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Floating emojis */
+      .floating-notes {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .note {
+        position: absolute;
+        font-size: 1.8rem;
+        opacity: 0;
+        animation: floatUp var(--dur) ease-in infinite;
+        animation-delay: var(--delay);
+        left: var(--left);
+        bottom: -10%;
+      }
+
+      @keyframes floatUp {
+        0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
+        10%  { opacity: 0.85; }
+        90%  { opacity: 0.6; }
+        100% { opacity: 0; transform: translateY(-110vh) rotate(360deg); }
+      }
+
+      /* ---- BUTTONS ---- */
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        background: var(--yellow);
+        color: var(--black);
+        font-family: 'Bangers', cursive;
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+        border-radius: 50px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 15px rgba(255, 200, 0, 0.5);
+      }
+
+      .btn:hover {
+        transform: scale(1.08) rotate(-1deg);
+        box-shadow: 0 6px 25px rgba(255, 200, 0, 0.7);
+      }
+
+      .btn-red {
+        background: var(--red);
+        color: var(--white);
+        box-shadow: 0 4px 15px rgba(230, 0, 0, 0.4);
+      }
+
+      .btn-red:hover {
+        box-shadow: 0 6px 25px rgba(230, 0, 0, 0.6);
+      }
+
+      /* ---- ABOUT ---- */
+      section { padding: 3rem 2rem; }
 
       .about,
       .events,
@@ -181,82 +224,291 @@
       .contact h2 {
         color: var(--red);
         margin-bottom: 1rem;
+        font-family: 'Bangers', cursive;
+        font-size: 2.5rem;
+        letter-spacing: 2px;
       }
 
-      .events ul {
-        list-style-type: none;
+      .about p { margin-bottom: 1rem; }
+
+      /* ---- VIDEO ---- */
+      .hero-video-container {
+        max-width: 90%;
+        width: 720px;
+        margin: 2rem auto;
       }
 
-      .events li {
+      .hero-video {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .video-caption {
+        margin-top: 0.5rem;
+        font-style: italic;
+        color: #444;
+        text-align: center;
+      }
+
+      /* ---- HIGHLIGHTS ---- */
+      .highlight-section {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        padding: 3rem 2rem;
+        background-color: #f5f5f5;
+      }
+
+      .highlight {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 2rem;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .highlight:hover {
+        transform: scale(1.02);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+      }
+
+      .highlight:nth-child(even) {
+        flex-direction: row-reverse;
+        background-color: #691316;
+        color: #fff;
+      }
+
+      .highlight:nth-child(odd) {
+        background-color: #f1c129;
+      }
+
+      .highlight img {
+        width: 45%;
+        border-radius: 12px;
+        transition: transform 0.4s;
+      }
+
+      .highlight:hover img {
+        transform: scale(1.05);
+      }
+
+      .highlight p {
+        font-size: 2.5rem;
+        font-weight: 500;
+        flex: 1;
+        padding: 1rem;
+        font-family: 'Bangers', cursive;
+      }
+
+      /* ---- PARALLAX ---- */
+      .parallax {
+        background-image: url('https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/parallax-bg.jpg');
+        min-height: 400px;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 2.8rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 6px #000;
+        font-family: 'Bangers', cursive;
+        letter-spacing: 4px;
+        gap: 0.8rem;
+      }
+
+      .parallax-sub {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+        font-family: 'Rock Salt', cursive;
+        color: var(--yellow);
+      }
+
+      /* ---- MOVE TIP WIDGET ---- */
+      .move-tip-section {
+        background: var(--black);
+        color: var(--white);
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .move-tip-section h2 {
+        font-family: 'Bangers', cursive;
+        font-size: 2.5rem;
+        color: var(--yellow);
+        margin-bottom: 1rem;
+        letter-spacing: 3px;
+      }
+
+      .move-tip-card {
+        background: #1a1a1a;
+        border: 3px solid var(--yellow);
+        border-radius: 16px;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 1.5rem auto;
+        font-family: 'Bangers', cursive;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s;
+      }
+
+      .move-tip-card.pop {
+        animation: cardPop 0.4s ease;
+      }
+
+      @keyframes cardPop {
+        0%   { transform: scale(0.95); }
+        50%  { transform: scale(1.06); }
+        100% { transform: scale(1); }
+      }
+
+      /* ---- EVENTS ---- */
+      .events-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+
+      .event-card {
+        background: var(--black);
+        color: var(--white);
+        border-radius: 16px;
+        padding: 1.5rem;
+        border-left: 6px solid var(--yellow);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .event-card:hover {
+        transform: translateY(-6px) rotate(1deg);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+      }
+
+      .event-card .event-emoji {
+        font-size: 2.2rem;
+        display: block;
         margin-bottom: 0.5rem;
       }
 
-      .contact form {
-        display: flex;
-        flex-direction: column;
+      .event-card .event-date {
+        font-family: 'Bangers', cursive;
+        font-size: 1.4rem;
+        color: var(--yellow);
+        letter-spacing: 1px;
       }
 
-      .contact input,
-      .contact textarea {
-        padding: 0.8rem;
-        margin-bottom: 1rem;
-        border: 2px solid var(--black);
-        border-radius: 5px;
-      }
-
-      .contact button {
-        background: var(--yellow);
-        border: none;
-        padding: 1rem;
+      .event-card .event-name {
+        margin-top: 0.4rem;
         font-size: 1rem;
         font-weight: bold;
-        cursor: pointer;
-        transition: background 0.3s ease;
       }
 
-      .contact button:hover {
-        background: var(--red);
-        color: var(--white);
+      /* ---- SCHEDULE ---- */
+      .schedule-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
       }
 
+      .schedule-card {
+        border-radius: 16px;
+        padding: 1.5rem;
+        border: 3px solid;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .schedule-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      }
+
+      .schedule-card.february {
+        background: #fff8dc;
+        border-color: var(--yellow);
+      }
+
+      .schedule-card.march {
+        background: #fff0f0;
+        border-color: var(--red);
+      }
+
+      .schedule-card h3 {
+        font-family: 'Bangers', cursive;
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+      }
+
+      .schedule-card.february h3 { color: #a07800; }
+      .schedule-card.march h3    { color: var(--red); }
+
+      .level-badge {
+        display: inline-block;
+        padding: 0.2rem 0.8rem;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.2rem;
+      }
+
+      .badge-newbee  { background: #ffe066; color: #5a3e00; }
+      .badge-killah  { background: #ff4444; color: #fff; }
+
+      .schedule-time {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-size: 1rem;
+      }
+
+      /* ---- SCROLL REVEAL ---- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease, transform 0.6s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ---- CONTACT ---- */
+      .contact p { margin-bottom: 1rem; }
+
+      /* ---- FOOTER ---- */
       footer {
         background: var(--black);
         color: var(--white);
         text-align: center;
-        padding: 1rem;
+        padding: 1.5rem;
+        font-family: 'Bangers', cursive;
+        letter-spacing: 1px;
+        font-size: 1.1rem;
       }
 
       .instagram {
         display: inline-block;
-        margin-top: 1rem;
+        margin-top: 0.8rem;
       }
 
-      .responsive-centered-section {
-        /* max-width: 600px; */
-        /* margin: 0 auto; */
-        /* padding: 2rem 1rem; */
-        /* text-align: center; */
-      }
-
-      .responsive-centered-section img {
-        max-width: 80%;
-        height: auto;
-        border-radius: 12px;
-        display: block;
-        /* margin: 0 auto; */
-      }
-
-      .responsive-centered-section figcaption {
-        margin-top: 1rem;
-        font-size: 1.1rem;
-        font-weight: 500;
-        color: #333;
-      }
-
+      /* ---- RESPONSIVE ---- */
       @media (max-width: 768px) {
-        .hamburger_menu {
-          display: block;
-        }
+        .hamburger_menu { display: block; }
 
         nav {
           position: absolute;
@@ -270,9 +522,7 @@
           display: none;
         }
 
-        nav.active {
-          display: flex;
-        }
+        nav.active { display: flex; }
 
         nav a {
           margin: 0.5rem 0;
@@ -281,41 +531,67 @@
           text-align: center;
         }
 
-        .hero h2 {
-          font-size: 1.5rem;
-        }
+        .hero h2    { font-size: 1.5rem; }
+        .hero-sub   { font-size: 1.4rem; }
 
-        .highlight {
-          flex-direction: column !important;
-        }
-
-        .highlight img {
-          width: 100%;
-        }
+        .highlight              { flex-direction: column !important; }
+        .highlight img          { width: 100%; }
       }
     </style>
   </head>
   <body>
+
+    <!-- ===== HEADER ===== -->
     <header>
-      <h1>BreaksR4Kidz</h1>
+      <h1>🕺 BreaksR4Kidz</h1>
       <div class="hamburger_menu" id="hamburger_menu">
         <i class="fas fa-bars"></i>
       </div>
       <nav id="nav">
         <a href="#about">About</a>
         <a href="#events">Events</a>
-        <a href="#contact">Contact</a>
         <a href="#schedule">Schedule</a>
+        <a href="#contact">Contact</a>
         <a href="https://www.instagram.com/breaksr4kidzhi" target="_blank">Instagram</a>
-        <a href="./files/waiver.pdf" download>Waiver & Release Form</a>
+        <a href="./files/waiver.pdf" download>Waiver</a>
       </nav>
     </header>
 
+    <!-- ===== HERO ===== -->
     <div class="hero">
-      <h2>Youth Breakdancing in Honolulu, HI<br />Coached by Tom Solo</h2>
+      <!-- Floating emojis -->
+      <div class="floating-notes">
+        <span class="note" style="--left:8%;  --dur:7s;   --delay:0s">🎵</span>
+        <span class="note" style="--left:22%; --dur:9s;   --delay:1s">⭐</span>
+        <span class="note" style="--left:38%; --dur:6s;   --delay:2s">🎶</span>
+        <span class="note" style="--left:52%; --dur:8s;   --delay:0.5s">🔥</span>
+        <span class="note" style="--left:67%; --dur:7.5s; --delay:3s">🎵</span>
+        <span class="note" style="--left:82%; --dur:10s;  --delay:1.5s">⭐</span>
+        <span class="note" style="--left:5%;  --dur:9s;   --delay:4s">💥</span>
+        <span class="note" style="--left:92%; --dur:6.5s; --delay:2.5s">🎶</span>
+        <span class="note" style="--left:47%; --dur:8.5s; --delay:5s">🏆</span>
+      </div>
+
+      <div class="hero-content">
+        <h2>Youth Breakdancing in Honolulu, HI<br />Coached by Tom Solo</h2>
+        <p class="hero-sub">Move. Groove. Break! 💫</p>
+        <div class="hero-cta">
+          <a href="#about"   class="btn">Learn More</a>
+          <a href="#contact" class="btn btn-red">Join Now! 🔥</a>
+        </div>
+      </div>
     </div>
 
-    <div class="hero-video-container">
+    <!-- ===== ABOUT ===== -->
+    <section id="about" class="about reveal">
+      <h2>🤸 About Us</h2>
+      <video src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1771439950/movie_d_jjcpkb.mov" width="80%" controls style="border-radius:12px; margin-bottom:1.5rem; display:block;"></video>
+      <p>BreaksR4Kidz is a youth breakdancing organization based in Honolulu, HI. Led by Coach Tom Solo, our mission is to empower kids through dance, build confidence, and develop discipline through the art of breaking.</p>
+      <p>Classes are open to all skill levels and offer a safe, positive environment for learning, expression, and fun.</p>
+    </section>
+
+    <!-- ===== VIDEO ===== -->
+    <div class="hero-video-container reveal">
       <figure>
         <video controls class="hero-video">
           <source src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1748892317/IMG_5191_slz1wr.mov" type="video/mp4" />
@@ -327,97 +603,201 @@
       </figure>
     </div>
 
+    <!-- ===== HIGHLIGHTS ===== -->
     <section class="highlight-section">
-      <div class="highlight">
+      <div class="highlight reveal">
         <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/discipline_apbalo.png" alt="Discipline" />
-        <p>Breakdancing teaches kids discipline and focus.</p>
+        <p>🎯 Breakdancing teaches kids discipline and focus.</p>
       </div>
-      <div class="highlight">
+      <div class="highlight reveal">
         <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/teamwork_vtlopj.png" alt="Teamwork" />
-        <p>Working together builds a strong sense of community.</p>
+        <p>🤝 Working together builds a strong sense of community.</p>
       </div>
-      <div class="highlight">
+      <div class="highlight reveal">
         <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/expression_bysa6p.png" alt="Expression" />
-        <p>Performing boosts confidence and self-esteem.</p>
+        <p>🌟 Performing boosts confidence and self-esteem.</p>
       </div>
-      <div class="highlight">
+      <div class="highlight reveal">
         <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/fitness_yxyqc5.png" alt="Fitness" />
-        <p>It's a fun way to stay physically active and healthy.</p>
+        <p>💪 It's a fun way to stay physically active and healthy.</p>
       </div>
-      <div class="highlight">
+      <div class="highlight reveal">
         <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/confidence_lbqlpx.png" alt="Confidence" />
-        <p>Encourages artistic expression through movement.</p>
+        <p>🎨 Encourages artistic expression through movement.</p>
       </div>
-      <div class="highlight">
+      <div class="highlight reveal">
         <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/culture_gkekcl.png" alt="Culture" />
-        <p>Introduces youth to hip hop culture and its roots.</p>
+        <p>🏆 Introduces youth to hip hop culture and its roots.</p>
       </div>
     </section>
 
-    <div class="parallax">BreaksR4Kidz Movement</div>
+    <!-- ===== PARALLAX ===== -->
+    <div class="parallax">
+      <span>BreaksR4Kidz Movement</span>
+      <span class="parallax-sub">Est. Honolulu, HI</span>
+    </div>
 
-    <section id="about" class="about">
-      <h2>About Us</h2>
-      <p>BreaksR4Kidz is a youth breakdancing organization based in Honolulu, HI that provides breakdancing classes to youth. Led by Coach Tom Solo, our mission is to empower kids through dance, build confidence, and develop discipline through the art of breaking.</p>
-      <p>Classes are open to all skill levels and offer a safe, positive environment for learning, expression, and fun.</p>
+    <!-- ===== MOVE TIP WIDGET ===== -->
+    <div class="move-tip-section">
+      <h2>🕹️ B-Boy Move of the Day</h2>
+      <div class="move-tip-card" id="moveTip">Loading your move tip…</div>
+      <button class="btn" onclick="nextTip()">🎲 Get a Move Tip!</button>
+    </div>
+
+    <!-- ===== EVENTS ===== -->
+    <section id="events" class="events reveal">
+      <h2>🗓️ Upcoming Events</h2>
+      <div class="events-grid">
+        <div class="event-card reveal">
+          <span class="event-emoji">🎉</span>
+          <div class="event-date">February 28</div>
+          <div class="event-name">Annual Holiday Party at iTrampoline</div>
+        </div>
+        <div class="event-card reveal">
+          <span class="event-emoji">🏛️</span>
+          <div class="event-date">Oct 4</div>
+          <div class="event-name">Hawai'i Children and Youth Day Performance at State Capitol</div>
+        </div>
+        <div class="event-card reveal">
+          <span class="event-emoji">🥇</span>
+          <div class="event-date">TBA – 2027</div>
+          <div class="event-name">AAU Junior Olympics</div>
+        </div>
+      </div>
     </section>
 
-    <section id="events" class="events">
-      <h2>Upcoming Events</h2>
-      <ul>
-        <!-- <li><strong>May 31:</strong> Junior Olympic Qualifier at St. Theresa School</li> -->
-        <li><strong>June 15:</strong> Summer Break Jam Session (Ala Moana Park)</li>
-        <li><strong>July 10:</strong> Parent & Youth Info Night (Kaimuki Community Center)</li>
-      </ul>
+    <!-- ===== SCHEDULE ===== -->
+    <section class="schedule reveal" id="schedule">
+      <h2>📅 Class Schedule</h2>
+      <div class="schedule-grid">
+
+        <div class="schedule-card february reveal">
+          <h3>🗓 February</h3>
+          <p><strong>Mon – Fri</strong> at Coach's Dojo</p>
+          <span class="schedule-time">🕠 Everyone: 5:30 PM – 6:30 PM</span>
+          <p><strong>Sunday</strong></p>
+          <span class="level-badge badge-newbee">🐝 New Bees</span>
+          <span class="schedule-time">2:30 PM – 3:30 PM</span>
+          <span class="level-badge badge-killah">🔥 Killah Bees &amp; Yellow Jackets</span>
+          <span class="schedule-time">3:30 PM – 4:30 PM</span>
+        </div>
+
+        <div class="schedule-card march reveal">
+          <h3>🗓 March</h3>
+          <p><strong>Wednesday</strong> at Coach's Dojo</p>
+          <span class="schedule-time">🕠 Everyone: 5:30 PM – 6:30 PM</span>
+          <p><strong>Sunday</strong> at Hawaii Ballet Theatre</p>
+          <span class="level-badge badge-newbee">🐝 New Bees</span>
+          <span class="schedule-time">2:30 PM – 3:30 PM</span>
+          <span class="level-badge badge-killah">🔥 Killah Bees &amp; Yellow Jackets</span>
+          <span class="schedule-time">3:30 PM – 4:30 PM</span>
+        </div>
+
+      </div>
     </section>
 
-    <section class="responsive-centered-section schedule" id="schedule">
-      <h2>Class Schedule</h2>
-      <figure>
-        <img  src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748958970/1FA28B03-5213-4D36-86AF-35012A8F55DE_jhetpn.jpg" alt="Summer Schedule" />
-        <!-- <figcaption>
-          June & July classes will be <strong>drop-in only on Sundays</strong> for <strong>$25</strong><br />
-          <span style="display:block; margin-top: 0.5rem;">
-            🐝 <strong>New Bees:</strong> 2:00 PM – 3:00 PM<br />
-            🔥 <strong>Killah Bees:</strong> 3:00 PM – 5:00 PM
-          </span>
-        </figcaption> -->
-      </figure>
+    <!-- ===== PHOTO HIGHLIGHTS ===== -->
+    <section class="highlight-section">
+      <div class="highlight reveal">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439941/IMG_0626_wkpraf.jpg" alt="Hip hop stance" />
+        <p>💥 In my hip hop stance.</p>
+      </div>
+      <div class="highlight reveal">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439929/IMG_0866_yrqgf3.jpg" alt="Focus" />
+        <p>👁️ Focus, vision and dedication.</p>
+      </div>
+      <div class="highlight reveal">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439929/IMG_1045_xqdfrh.jpg" alt="In the news" />
+        <p>📰 We are in the news!</p>
+      </div>
     </section>
-    
-    <section id="contact" class="contact">
-      <h2>Contact Us</h2>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="contact reveal">
+      <h2>📬 Contact Us</h2>
       <p>If you have any questions or want to learn more about the program, feel free to email us directly.</p>
-      <a href="mailto:coachtomsolo@yahoo.com" style="display:inline-block; padding: 1rem 2rem; background: var(--yellow); color: black; font-weight: bold; text-decoration: none; border-radius: 8px; margin-top: 1rem;">Email Us</a>
+      <a href="mailto:coachtomsolo@yahoo.com" class="btn" style="margin-top:1rem; font-size:1.2rem;">✉️ Email Coach Tom!</a>
     </section>
 
+    <!-- ===== FOOTER ===== -->
     <footer>
-      &copy; 2025 BreaksR4Kidz | Powered by the Community | Designed for the Youth
+      🕺 &copy; 2025 BreaksR4Kidz | Powered by the Community | Designed for the Youth 💃
       <div class="instagram">
-        <a href="https://www.instagram.com/hawaii_break_sport_" target="_blank" style="color: var(--yellow); text-decoration: none">Follow us on Instagram</a>
+        <a href="https://www.instagram.com/hawaii_break_sport_" target="_blank" style="color: var(--yellow); text-decoration: none;">
+          📸 Follow us on Instagram
+        </a>
+      </div>
+      <div style="margin-top:0.5rem;">
+        <a href="./files/waiver.pdf" download style="color:#aaa; font-size:0.85rem; text-decoration:underline;">
+          Download Waiver &amp; Release Form
+        </a>
       </div>
     </footer>
-<script>
-  const hamburgerMenu = document.getElementById('hamburger_menu');
-  const nav = document.getElementById('nav');
-  const icon = hamburgerMenu.querySelector('i');
-  const navLinks = nav.querySelectorAll('a');
 
-  hamburgerMenu.addEventListener('click', () => {
-    nav.classList.toggle('active');
-    icon.classList.toggle('fa-bars');
-    icon.classList.toggle('fa-times');
-  });
+    <script>
+      // ---- Hamburger menu ----
+      const hamburgerMenu = document.getElementById('hamburger_menu');
+      const nav = document.getElementById('nav');
+      const icon = hamburgerMenu.querySelector('i');
+      const navLinks = nav.querySelectorAll('a');
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      if (window.innerWidth <= 768 && nav.classList.contains('active')) {
-        nav.classList.remove('active');
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
+      hamburgerMenu.addEventListener('click', () => {
+        nav.classList.toggle('active');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-times');
+      });
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth <= 768 && nav.classList.contains('active')) {
+            nav.classList.remove('active');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+          }
+        });
+      });
+
+      // ---- Scroll reveal ----
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach(el => observer.observe(el));
+
+      // ---- B-Boy Move Tip widget ----
+      const tips = [
+        "🔄 Toprock — Get your groove on before you hit the floor!",
+        "💥 6-Step — Master the basic footwork every B-Boy needs!",
+        "🌪️ Windmill — Spin on your back and keep going and going!",
+        "🤸 Freeze — Strike a bold pose and hold it like a champ!",
+        "🦶 CC — The classic footwork to get you moving fast!",
+        "💫 Headspin — Spin on your head — harder than it looks!",
+        "🕺 Baby Freeze — Go low and make it look easy!",
+        "🔥 Power Moves — Show your strength with big spinning moves!",
+        "🎯 Downrock — Take your footwork all the way to floor level!",
+        "✈️ Airflare — Launch yourself and glide through the air!",
+        "🏆 Practice every day — even 10 minutes counts!",
+        "🎵 Feel the beat — every move starts with the music!",
+      ];
+
+      let tipIndex = -1;
+      const moveTip = document.getElementById('moveTip');
+
+      function nextTip() {
+        moveTip.classList.remove('pop');
+        void moveTip.offsetWidth; // trigger reflow to restart animation
+        tipIndex = (tipIndex + 1) % tips.length;
+        moveTip.textContent = tips[tipIndex];
+        moveTip.classList.add('pop');
       }
-    });
-  });
-</script>
+
+      // Show first tip automatically
+      nextTip();
+    </script>
   </body>
 </html>
