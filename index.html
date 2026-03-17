@@ -416,6 +416,26 @@
         font-weight: bold;
       }
 
+      .event-card-img {
+        padding: 0;
+        overflow: hidden;
+        border-left: none;
+        border: 4px solid var(--yellow);
+      }
+
+      .event-card-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        border-radius: 12px;
+        transition: transform 0.4s;
+      }
+
+      .event-card-img:hover img {
+        transform: scale(1.04);
+      }
+
       /* ---- SCHEDULE ---- */
       .schedule-grid {
         display: grid;
@@ -585,23 +605,21 @@
     <!-- ===== ABOUT ===== -->
     <section id="about" class="about reveal">
       <h2>🤸 About Us</h2>
-      <video src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1771439950/movie_d_jjcpkb.mov" width="80%" controls style="border-radius:12px; margin-bottom:1.5rem; display:block;"></video>
       <p>BreaksR4Kidz is a youth breakdancing organization based in Honolulu, HI. Led by Coach Tom Solo, our mission is to empower kids through dance, build confidence, and develop discipline through the art of breaking.</p>
       <p>Classes are open to all skill levels and offer a safe, positive environment for learning, expression, and fun.</p>
+      <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
+        <video src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1771439950/movie_d_jjcpkb.mov" controls style="width:100%; border-radius:12px;"></video>
+        <figure>
+          <video controls style="width:100%; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.2);">
+            <source src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1748892317/IMG_5191_slz1wr.mov" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <figcaption style="margin-top:0.5rem; font-style:italic; color:#444; text-align:center;">
+            Youth breakdancers in action at a recent BreaksR4Kidz session.
+          </figcaption>
+        </figure>
+      </div>
     </section>
-
-    <!-- ===== VIDEO ===== -->
-    <div class="hero-video-container reveal">
-      <figure>
-        <video controls class="hero-video">
-          <source src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1748892317/IMG_5191_slz1wr.mov" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <figcaption class="video-caption">
-          Youth breakdancers in action at a recent BreaksR4Kidz session.
-        </figcaption>
-      </figure>
-    </div>
 
     <!-- ===== HIGHLIGHTS ===== -->
     <section class="highlight-section">
@@ -648,10 +666,11 @@
     <section id="events" class="events reveal">
       <h2>🗓️ Upcoming Events</h2>
       <div class="events-grid">
-        <div class="event-card reveal">
-          <span class="event-emoji">🎉</span>
-          <div class="event-date">February 28</div>
-          <div class="event-name">Annual Holiday Party at iTrampoline</div>
+        <div class="event-card event-card-img reveal">
+          <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1773741322/IMG_1212_o1c3ji.jpg" alt="Upcoming Event" />
+        </div>
+        <div class="event-card event-card-img reveal">
+          <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1773741299/IMG_8413_tat1iu.jpg" alt="Upcoming Event" />
         </div>
         <div class="event-card reveal">
           <span class="event-emoji">🏛️</span>
