@@ -473,8 +473,15 @@
         margin-bottom: 1rem;
       }
 
-      .schedule-card.february h3 { color: #a07800; }
       .schedule-card.march h3    { color: var(--red); }
+
+      .schedule-card.pricing {
+        background: var(--black);
+        border-color: var(--yellow);
+        color: var(--white);
+      }
+
+      .schedule-card.pricing h3 { color: var(--yellow); }
 
       .level-badge {
         display: inline-block;
@@ -690,26 +697,23 @@
       <h2>📅 Class Schedule</h2>
       <div class="schedule-grid">
 
-        <div class="schedule-card february reveal">
-          <h3>🗓 February</h3>
-          <p><strong>Mon – Fri</strong> at Coach's Dojo</p>
+        <div class="schedule-card march reveal">
+          <h3>🗓 March 2026</h3>
+          <p><strong>Wednesday</strong> at Coach's Dojo</p>
           <span class="schedule-time">🕠 Everyone: 5:30 PM – 6:30 PM</span>
-          <p><strong>Sunday</strong></p>
-          <span class="level-badge badge-newbee">🐝 New Bees</span>
+          <p style="margin-top:0.4rem;"><strong>Sunday</strong> at Music Body and Soul Dance and Wellness Studio</p>
+          <p style="font-size:0.85rem; color:#888; margin-bottom:0.6rem;">Nā Lama Kukui, 2nd Floor · 560 N Nimitz Hwy., Suite 221</p>
+          <span class="level-badge badge-newbee">🐝 Newbies</span>
           <span class="schedule-time">2:30 PM – 3:30 PM</span>
-          <span class="level-badge badge-killah">🔥 Killah Bees &amp; Yellow Jackets</span>
+          <span class="level-badge badge-killah">🔥 KillahBeez &amp; Yellow Jackets</span>
           <span class="schedule-time">3:30 PM – 4:30 PM</span>
         </div>
 
-        <div class="schedule-card march reveal">
-          <h3>🗓 March</h3>
-          <p><strong>Wednesday</strong> at Coach's Dojo</p>
-          <span class="schedule-time">🕠 Everyone: 5:30 PM – 6:30 PM</span>
-          <p><strong>Sunday</strong> at Hawaii Ballet Theatre</p>
-          <span class="level-badge badge-newbee">🐝 New Bees</span>
-          <span class="schedule-time">2:30 PM – 3:30 PM</span>
-          <span class="level-badge badge-killah">🔥 Killah Bees &amp; Yellow Jackets</span>
-          <span class="schedule-time">3:30 PM – 4:30 PM</span>
+        <div class="schedule-card pricing reveal">
+          <h3>💰 Pricing</h3>
+          <p><strong>$40</strong> — Walk-ins &amp; Sunday classes only</p>
+          <p style="margin-top:0.5rem;"><strong>$200</strong> — Unlimited classes</p>
+          <p style="margin-top:0.8rem; font-size:0.95rem; line-height:1.5;">Wednesdays are reserved for unlimited students. Walk-ins are Sundays only — must be scheduled with Coach in advance.</p>
         </div>
 
       </div>
