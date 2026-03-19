@@ -1,677 +1,859 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BreaksR4Kidz – Honolulu</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BreaksR4Kidz – Honolulu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&family=Bangers&family=Rock+Salt&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.min.js"></script>
+  <style>
+    :root {
+      --black:  #000;
+      --bg:     #0a0a0a;
+      --bg2:    #111;
+      --red:    #e60000;
+      --yellow: #ffc800;
+      --white:  #fff;
+      --muted:  rgba(255,255,255,0.55);
+    }
 
-    <style>
-      :root {
-        --black: #000;
-        --red: #e60000;
-        --yellow: #ffc800;
-        --white: #fff;
-      }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: "Rubik", sans-serif;
-      }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Rubik', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-      body {
-        background-color: var(--white);
-        color: var(--black);
-        line-height: 1.6;
-        font-size: 1.25rem;
-        overflow-x: hidden;
-      }
+    /* ================================================================
+       HEADER
+    ================================================================ */
+    header {
+      position: fixed;
+      top: 0; width: 100%;
+      z-index: 1000;
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,200,0,0.12);
+      padding: 0.85rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-      /* ---- HEADER ---- */
-      header {
-        background-color: var(--black);
-        color: var(--white);
-        padding: 1rem 2rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: fixed;
+    .logo {
+      font-family: 'Bangers', cursive;
+      font-size: 1.9rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--yellow), var(--red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: logoPop 0.8s cubic-bezier(.34,1.56,.64,1);
+    }
+
+    @keyframes logoPop {
+      0%   { transform: scale(0.6) rotate(-5deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0deg);    opacity: 1; }
+    }
+
+    nav { display: flex; align-items: center; gap: 0.15rem; flex-wrap: wrap; }
+
+    nav a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-family: 'Rock Salt', cursive;
+      font-size: 0.58rem;
+      padding: 0.4rem 0.65rem;
+      border-radius: 5px;
+      transition: all 0.2s;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover { color: var(--black); background: var(--yellow); }
+
+    .hamburger_menu {
+      display: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: var(--yellow);
+    }
+
+    /* ================================================================
+       HERO
+    ================================================================ */
+    .hero {
+      height: 100vh;
+      background: #000;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 70px;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 1.5rem;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Rock Salt', cursive;
+      font-size: clamp(0.55rem, 1.5vw, 0.85rem);
+      letter-spacing: 6px;
+      color: var(--yellow);
+      margin-bottom: 1rem;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(5.5rem, 16vw, 13rem);
+      line-height: 0.85;
+      letter-spacing: 5px;
+      color: var(--yellow);
+      text-shadow:
+        0 0 40px rgba(255,200,0,0.7),
+        0 0 90px rgba(255,200,0,0.3),
+        5px 5px 0 rgba(230,0,0,0.45);
+      animation: titleSlam 1s cubic-bezier(.34,1.56,.64,1) 0.15s both;
+    }
+
+    .hero-sub {
+      font-family: 'Rock Salt', cursive;
+      font-size: clamp(0.65rem, 2vw, 1rem);
+      letter-spacing: 7px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 1.3rem;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .hero-cta {
+      margin-top: 2.2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.7s both;
+    }
+
+    @keyframes titleSlam {
+      0%   { transform: translateY(-70px) scaleY(1.3); opacity: 0; }
+      65%  { transform: translateY(6px) scaleY(0.96); }
+      100% { transform: translateY(0) scaleY(1); opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ================================================================
+       MARQUEE
+    ================================================================ */
+    .marquee-wrap {
+      background: var(--yellow);
+      overflow: hidden;
+      padding: 0.8rem 0;
+    }
+
+    .marquee-track {
+      display: inline-flex;
+      white-space: nowrap;
+      animation: marquee 28s linear infinite;
+      font-family: 'Bangers', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 5px;
+      color: var(--black);
+    }
+
+    .marquee-track span { padding: 0 0.8rem; }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ================================================================
+       BUTTONS
+    ================================================================ */
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.5rem;
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      border-radius: 4px;
+      text-decoration: none;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .btn-yellow {
+      background: var(--yellow);
+      color: var(--black);
+      box-shadow: 0 4px 28px rgba(255,200,0,0.4);
+    }
+
+    .btn-yellow:hover {
+      background: transparent;
+      border-color: var(--yellow);
+      color: var(--yellow);
+      box-shadow: 0 0 36px rgba(255,200,0,0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: rgba(255,255,255,0.35);
+      color: var(--white);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--red);
+      color: var(--red);
+      box-shadow: 0 0 30px rgba(230,0,0,0.3);
+    }
+
+    /* ================================================================
+       SECTION BASE
+    ================================================================ */
+    .section { padding: 6rem 2rem; position: relative; }
+
+    .section-inner { max-width: 1000px; margin: 0 auto; }
+
+    .section-label {
+      display: block;
+      font-family: 'Rock Salt', cursive;
+      font-size: 0.6rem;
+      letter-spacing: 5px;
+      color: var(--yellow);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      letter-spacing: 3px;
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
+
+    .title-yellow { color: var(--yellow); }
+
+    .title-gradient {
+      background: linear-gradient(135deg, var(--yellow), var(--red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ================================================================
+       ABOUT
+    ================================================================ */
+    .about-section { background: var(--bg); }
+
+    .about-lead {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.85;
+      max-width: 680px;
+      margin-bottom: 3rem;
+    }
+
+    .about-lead p { margin-bottom: 0.9rem; }
+
+    .video-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .video-item video {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .video-caption {
+      margin-top: 0.45rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      font-style: italic;
+    }
+
+    .ig-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .ig-grid .instagram-media {
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
+
+    /* ================================================================
+       COACH
+    ================================================================ */
+    .coach-section { background: var(--black); }
+
+    .coach-card {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 3rem;
+      align-items: start;
+      border: 1px solid rgba(255,200,0,0.12);
+      border-radius: 14px;
+      padding: 3rem;
+      background: rgba(255,200,0,0.025);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coach-card::after {
+      content: 'COACH';
+      position: absolute;
+      right: -1.5rem;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: 'Bangers', cursive;
+      font-size: 9rem;
+      color: rgba(255,200,0,0.03);
+      letter-spacing: 12px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .coach-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--yellow), var(--red));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      flex-shrink: 0;
+      animation: avatarPulse 3.5s ease-in-out infinite;
+    }
+
+    @keyframes avatarPulse {
+      0%, 100% { box-shadow: 0 0 28px rgba(255,200,0,0.35); }
+      50%       { box-shadow: 0 0 60px rgba(255,200,0,0.6), 0 0 0 10px rgba(255,200,0,0.06); }
+    }
+
+    .coach-name {
+      font-family: 'Bangers', cursive;
+      font-size: 3.5rem;
+      letter-spacing: 3px;
+      color: var(--yellow);
+      line-height: 1;
+    }
+
+    .coach-badge {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      font-family: 'Bangers', cursive;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      padding: 0.2rem 1rem;
+      border-radius: 4px;
+      margin: 0.6rem 0 1.3rem;
+    }
+
+    .coach-bio p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.85;
+      margin-bottom: 0.9rem;
+    }
+
+    .coach-quote {
+      border-left: 3px solid var(--yellow);
+      padding-left: 1.2rem;
+      font-style: italic;
+      color: rgba(255,200,0,0.75) !important;
+    }
+
+    /* ================================================================
+       HIGHLIGHTS (program pillars)
+    ================================================================ */
+    .highlight-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .highlight {
+      display: flex;
+      align-items: stretch;
+      overflow: hidden;
+      transition: transform 0.3s;
+      cursor: default;
+    }
+
+    .highlight:hover { z-index: 1; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+
+    .highlight:nth-child(odd)  { background: #f1c129; }
+    .highlight:nth-child(even) { flex-direction: row-reverse; background: #691316; color: #fff; }
+
+    .highlight img {
+      width: 45%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s;
+    }
+
+    .highlight:hover img { transform: scale(1.04); }
+
+    .highlight p {
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+      flex: 1;
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      line-height: 1.2;
+    }
+
+    /* ================================================================
+       PARALLAX
+    ================================================================ */
+    .parallax {
+      background-image: url('https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/parallax-bg.jpg');
+      min-height: 360px;
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      text-align: center;
+    }
+
+    .parallax-main {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      letter-spacing: 7px;
+      color: var(--white);
+      text-shadow: 0 2px 24px rgba(0,0,0,0.9);
+    }
+
+    .parallax-sub {
+      font-family: 'Rock Salt', cursive;
+      font-size: 0.8rem;
+      letter-spacing: 5px;
+      color: var(--yellow);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    /* ================================================================
+       MOVE TIP WIDGET
+    ================================================================ */
+    .move-tip-section {
+      background: var(--bg2);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .move-tip-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,200,0,0.25);
+      border-radius: 12px;
+      padding: 2.5rem;
+      max-width: 660px;
+      margin: 1.5rem auto;
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      letter-spacing: 1px;
+      color: var(--white);
+      min-height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .move-tip-card.pop { animation: cardPop 0.45s cubic-bezier(.34,1.56,.64,1); }
+
+    @keyframes cardPop {
+      0%   { transform: scale(0.92); }
+      55%  { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+
+    /* ================================================================
+       EVENTS
+    ================================================================ */
+    .events-section { background: var(--bg); }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .event-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,200,0,0.12);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    .event-card:hover {
+      border-color: var(--yellow);
+      transform: translateY(-7px);
+      box-shadow: 0 20px 44px rgba(0,0,0,0.35);
+    }
+
+    .event-card .event-emoji { font-size: 2.5rem; display: block; margin-bottom: 0.8rem; }
+
+    .event-card .event-date {
+      font-family: 'Bangers', cursive;
+      font-size: 1.6rem;
+      color: var(--yellow);
+      letter-spacing: 1px;
+    }
+
+    .event-card .event-name { margin-top: 0.4rem; color: var(--muted); font-size: 0.95rem; font-weight: 600; }
+
+    .event-card-img {
+      padding: 0;
+      border: 1px solid rgba(255,200,0,0.25);
+      overflow: hidden;
+      height: 300px;
+    }
+
+    .event-card-img img { width: 100%; height: 100%; object-fit: contain; display: block; background: #000; transition: transform 0.4s; }
+    .event-card-img:hover img { transform: scale(1.04); }
+
+    /* ================================================================
+       SCHEDULE
+    ================================================================ */
+    .schedule-section { background: var(--black); }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .schedule-card {
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 2rem;
+      background: rgba(255,255,255,0.03);
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .schedule-card:hover { transform: translateY(-4px); border-color: rgba(255,200,0,0.35); }
+
+    .schedule-card h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      color: var(--yellow);
+    }
+
+    .schedule-card p { color: var(--muted); margin-bottom: 0.4rem; }
+
+    .level-badge {
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .badge-newbee { background: rgba(255,224,102,0.12); color: #ffe066; border: 1px solid rgba(255,224,102,0.3); }
+    .badge-killah { background: rgba(230,0,0,0.15);    color: #ff5555; border: 1px solid rgba(230,0,0,0.3); }
+
+    .schedule-time { display: block; margin-bottom: 0.6rem; font-size: 0.9rem; color: var(--muted); }
+
+    /* ================================================================
+       CONTACT
+    ================================================================ */
+    .contact-section { background: var(--bg2); text-align: center; }
+    .contact-section p { color: var(--muted); max-width: 480px; margin: 0 auto 2.5rem; font-size: 1.05rem; }
+
+    /* ================================================================
+       SCROLL REVEAL
+    ================================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ================================================================
+       FOOTER
+    ================================================================ */
+    footer {
+      background: var(--black);
+      border-top: 1px solid rgba(255,200,0,0.08);
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-logo {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, var(--yellow), var(--red));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+    .footer-links a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--yellow); }
+
+    /* ================================================================
+       RESPONSIVE
+    ================================================================ */
+    @media (max-width: 768px) {
+      .hamburger_menu { display: block; }
+
+      nav {
+        position: absolute;
+        top: 100%; left: 0;
         width: 100%;
-        top: 0;
-        z-index: 1000;
-        font-family: 'Bangers', cursive;
-      }
-
-      header h1 {
-        font-size: 1.8rem;
-        color: var(--yellow);
-        letter-spacing: 2px;
-        animation: headerPop 0.6s ease;
-      }
-
-      @keyframes headerPop {
-        0%   { transform: scale(0.8); opacity: 0; }
-        100% { transform: scale(1);   opacity: 1; }
-      }
-
-      nav { display: flex; }
-
-      nav a {
-        margin-left: 1.5rem;
-        color: var(--white);
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 1rem;
-        font-family: "Rock Salt", cursive;
-        transition: color 0.2s, transform 0.2s;
-        display: inline-block;
-      }
-
-      nav a:hover {
-        color: var(--yellow);
-        transform: scale(1.12);
-      }
-
-      .hamburger_menu {
+        background: rgba(0,0,0,0.97);
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
         display: none;
-        cursor: pointer;
-        font-size: 1.5rem;
-        color: var(--yellow);
+        border-bottom: 1px solid rgba(255,200,0,0.12);
+        gap: 0;
       }
 
-      /* ---- HERO ---- */
-      .hero {
-        background: url("https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/kidsdancing_icv4nk.png") center/cover no-repeat;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: var(--white);
-        text-align: center;
-        padding-top: 60px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.45);
-      }
-
-      .hero-content {
-        position: relative;
-        z-index: 1;
-      }
-
-      .hero h2 {
-        font-size: 2.5rem;
-        font-family: "Rock Salt", cursive;
-        background-color: rgba(0, 0, 0, 0.65);
-        padding: 1rem 2rem;
-        border-radius: 8px;
-        border: 3px solid var(--yellow);
-        animation: heroBounce 0.8s ease-out;
-      }
-
-      .hero-sub {
-        margin-top: 1.2rem;
-        font-family: 'Bangers', cursive;
-        font-size: 2rem;
-        color: var(--yellow);
-        letter-spacing: 4px;
-        animation: fadeInUp 1s ease 0.4s both;
-      }
-
-      .hero-cta {
-        margin-top: 1.5rem;
-        animation: fadeInUp 1s ease 0.8s both;
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      @keyframes heroBounce {
-        0%   { transform: translateY(-40px); opacity: 0; }
-        60%  { transform: translateY(10px); }
-        100% { transform: translateY(0);    opacity: 1; }
-      }
-
-      @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-
-      /* Floating emojis */
-      .floating-notes {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-      }
-
-      .note {
-        position: absolute;
-        font-size: 1.8rem;
-        opacity: 0;
-        animation: floatUp var(--dur) ease-in infinite;
-        animation-delay: var(--delay);
-        left: var(--left);
-        bottom: -10%;
-      }
-
-      @keyframes floatUp {
-        0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
-        10%  { opacity: 0.85; }
-        90%  { opacity: 0.6; }
-        100% { opacity: 0; transform: translateY(-110vh) rotate(360deg); }
-      }
-
-      /* ---- BUTTONS ---- */
-      .btn {
-        display: inline-block;
-        padding: 0.8rem 2rem;
-        background: var(--yellow);
-        color: var(--black);
-        font-family: 'Bangers', cursive;
-        font-size: 1.4rem;
-        letter-spacing: 2px;
-        border-radius: 50px;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
-        box-shadow: 0 4px 15px rgba(255, 200, 0, 0.5);
-      }
-
-      .btn:hover {
-        transform: scale(1.08) rotate(-1deg);
-        box-shadow: 0 6px 25px rgba(255, 200, 0, 0.7);
-      }
-
-      .btn-red {
-        background: var(--red);
-        color: var(--white);
-        box-shadow: 0 4px 15px rgba(230, 0, 0, 0.4);
-      }
-
-      .btn-red:hover {
-        box-shadow: 0 6px 25px rgba(230, 0, 0, 0.6);
-      }
-
-      /* ---- ABOUT ---- */
-      section { padding: 3rem 2rem; }
-
-      .about,
-      .events,
-      .schedule,
-      .contact {
-        max-width: 960px;
-        margin: auto;
-      }
-
-      .about h2,
-      .events h2,
-      .schedule h2,
-      .contact h2 {
-        color: var(--red);
-        margin-bottom: 1rem;
-        font-family: 'Bangers', cursive;
-        font-size: 2.5rem;
-        letter-spacing: 2px;
-      }
-
-      .about p { margin-bottom: 1rem; }
-
-      /* ---- VIDEO ---- */
-      .hero-video-container {
-        max-width: 90%;
-        width: 720px;
-        margin: 2rem auto;
-      }
-
-      .hero-video {
-        width: 100%;
-        height: auto;
-        border-radius: 12px;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-      }
-
-      .video-caption {
-        margin-top: 0.5rem;
-        font-style: italic;
-        color: #444;
-        text-align: center;
-      }
-
-      /* ---- HIGHLIGHTS ---- */
-      .highlight-section {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-        padding: 3rem 2rem;
-        background-color: #f5f5f5;
-      }
-
-      .highlight {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 2rem;
-        border-radius: 16px;
-        overflow: hidden;
-        transition: transform 0.3s, box-shadow 0.3s;
-      }
-
-      .highlight:hover {
-        transform: scale(1.02);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-      }
-
-      .highlight:nth-child(even) {
-        flex-direction: row-reverse;
-        background-color: #691316;
-        color: #fff;
-      }
-
-      .highlight:nth-child(odd) {
-        background-color: #f1c129;
-      }
-
-      .highlight img {
-        width: 45%;
-        border-radius: 12px;
-        transition: transform 0.4s;
-      }
-
-      .highlight:hover img {
-        transform: scale(1.05);
-      }
-
-      .highlight p {
-        font-size: 2.5rem;
-        font-weight: 500;
-        flex: 1;
-        padding: 1rem;
-        font-family: 'Bangers', cursive;
-      }
-
-      /* ---- PARALLAX ---- */
-      .parallax {
-        background-image: url('https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/parallax-bg.jpg');
-        min-height: 400px;
-        background-attachment: fixed;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 2.8rem;
-        font-weight: bold;
-        text-shadow: 2px 2px 6px #000;
-        font-family: 'Bangers', cursive;
-        letter-spacing: 4px;
-        gap: 0.8rem;
-      }
-
-      .parallax-sub {
-        font-size: 1.2rem;
-        letter-spacing: 3px;
-        font-family: 'Rock Salt', cursive;
-        color: var(--yellow);
-      }
-
-      /* ---- MOVE TIP WIDGET ---- */
-      .move-tip-section {
-        background: var(--black);
-        color: var(--white);
-        padding: 3rem 2rem;
-        text-align: center;
-      }
-
-      .move-tip-section h2 {
-        font-family: 'Bangers', cursive;
-        font-size: 2.5rem;
-        color: var(--yellow);
-        margin-bottom: 1rem;
-        letter-spacing: 3px;
-      }
-
-      .move-tip-card {
-        background: #1a1a1a;
-        border: 3px solid var(--yellow);
-        border-radius: 16px;
-        padding: 2rem;
-        max-width: 600px;
-        margin: 1.5rem auto;
-        font-family: 'Bangers', cursive;
-        font-size: 1.8rem;
-        letter-spacing: 1px;
-        min-height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.3s;
-      }
-
-      .move-tip-card.pop {
-        animation: cardPop 0.4s ease;
-      }
-
-      @keyframes cardPop {
-        0%   { transform: scale(0.95); }
-        50%  { transform: scale(1.06); }
-        100% { transform: scale(1); }
-      }
-
-      /* ---- EVENTS ---- */
-      .events-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-      }
-
-      .event-card {
-        background: var(--black);
-        color: var(--white);
-        border-radius: 16px;
-        padding: 1.5rem;
-        border-left: 6px solid var(--yellow);
-        transition: transform 0.3s, box-shadow 0.3s;
-      }
-
-      .event-card:hover {
-        transform: translateY(-6px) rotate(1deg);
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-      }
-
-      .event-card .event-emoji {
-        font-size: 2.2rem;
-        display: block;
-        margin-bottom: 0.5rem;
-      }
-
-      .event-card .event-date {
-        font-family: 'Bangers', cursive;
-        font-size: 1.4rem;
-        color: var(--yellow);
-        letter-spacing: 1px;
-      }
-
-      .event-card .event-name {
-        margin-top: 0.4rem;
-        font-size: 1rem;
-        font-weight: bold;
-      }
-
-      .event-card-img {
-        padding: 0;
-        overflow: hidden;
-        border-left: none;
-        border: 4px solid var(--yellow);
-      }
-
-      .event-card-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        border-radius: 12px;
-        transition: transform 0.4s;
-      }
-
-      .event-card-img:hover img {
-        transform: scale(1.04);
-      }
-
-      /* ---- SCHEDULE ---- */
-      .schedule-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-      }
-
-      .schedule-card {
-        border-radius: 16px;
-        padding: 1.5rem;
-        border: 3px solid;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-
-      .schedule-card:hover {
-        transform: scale(1.03);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-      }
-
-      .schedule-card.february {
-        background: #fff8dc;
-        border-color: var(--yellow);
-      }
-
-      .schedule-card.march {
-        background: #fff0f0;
-        border-color: var(--red);
-      }
-
-      .schedule-card h3 {
-        font-family: 'Bangers', cursive;
-        font-size: 1.8rem;
-        letter-spacing: 2px;
-        margin-bottom: 1rem;
-      }
-
-      .schedule-card.march h3    { color: var(--red); }
-
-      .schedule-card.pricing {
-        background: var(--black);
-        border-color: var(--yellow);
-        color: var(--white);
-      }
-
-      .schedule-card.pricing h3 { color: var(--yellow); }
-
-      .level-badge {
-        display: inline-block;
-        padding: 0.2rem 0.8rem;
-        border-radius: 50px;
-        font-weight: bold;
-        font-size: 0.9rem;
-        margin-top: 0.6rem;
-        margin-bottom: 0.2rem;
-      }
-
-      .badge-newbee  { background: #ffe066; color: #5a3e00; }
-      .badge-killah  { background: #ff4444; color: #fff; }
-
-      .schedule-time {
-        display: block;
-        margin-bottom: 0.6rem;
-        font-size: 1rem;
-      }
-
-      /* ---- SCROLL REVEAL ---- */
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
-      }
-
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      /* ---- CONTACT ---- */
-      .contact p { margin-bottom: 1rem; }
-
-      /* ---- FOOTER ---- */
-      footer {
-        background: var(--black);
-        color: var(--white);
-        text-align: center;
-        padding: 1.5rem;
-        font-family: 'Bangers', cursive;
-        letter-spacing: 1px;
-        font-size: 1.1rem;
-      }
-
-      .instagram {
-        display: inline-block;
-        margin-top: 0.8rem;
-      }
-
-      /* ---- RESPONSIVE ---- */
-      @media (max-width: 768px) {
-        .hamburger_menu { display: block; }
-
-        nav {
-          position: absolute;
-          top: 100%;
-          left: 0;
-          width: 100%;
-          background-color: var(--black);
-          flex-direction: column;
-          align-items: center;
-          padding: 1rem 0;
-          display: none;
-        }
-
-        nav.active { display: flex; }
-
-        nav a {
-          margin: 0.5rem 0;
-          padding: 0.5rem 1rem;
-          width: 100%;
-          text-align: center;
-        }
-
-        .hero h2    { font-size: 1.5rem; }
-        .hero-sub   { font-size: 1.4rem; }
-
-        .highlight              { flex-direction: column !important; }
-        .highlight img          { width: 100%; }
-      }
-    </style>
-  </head>
-  <body>
-
-    <!-- ===== HEADER ===== -->
-    <header>
-      <h1>🕺 BreaksR4Kidz</h1>
-      <div class="hamburger_menu" id="hamburger_menu">
-        <i class="fas fa-bars"></i>
+      nav.active { display: flex; }
+      nav a { width: 100%; text-align: center; padding: 0.7rem; font-size: 0.65rem; }
+
+      .coach-card { grid-template-columns: 1fr; gap: 1.5rem; }
+      .coach-card::after { display: none; }
+
+      .video-pair { grid-template-columns: 1fr; }
+      .ig-grid    { grid-template-columns: 1fr; }
+
+      .highlight              { flex-direction: column !important; }
+      .highlight img          { width: 100%; height: 220px; }
+      .highlight p            { font-size: 1.8rem; padding: 1.5rem 2rem; }
+
+      .section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+  ============================================================ -->
+  <header>
+    <div class="logo">🕺 BreaksR4Kidz</div>
+    <div class="hamburger_menu" id="hamburger_menu"><i class="fas fa-bars"></i></div>
+    <nav id="nav">
+      <a href="#about">About</a>
+      <a href="#coach">Coach</a>
+      <a href="#events">Events</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.instagram.com/breaksr4kidzhi_" target="_blank">Instagram</a>
+      <a href="./files/waiver.pdf" download>Waiver</a>
+    </nav>
+  </header>
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <div class="hero">
+    <div id="hero-canvas"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Honolulu, Hawai'i &nbsp;·&nbsp; Est. by Coach Tom Solo</p>
+      <h1 class="hero-title">BREAKS<br>R4KIDZ</h1>
+      <p class="hero-sub">Move &nbsp;·&nbsp; Groove &nbsp;·&nbsp; Break</p>
+      <div class="hero-cta">
+        <a href="#about"   class="btn btn-yellow">Learn More</a>
+        <a href="#contact" class="btn btn-outline">Join Now 🔥</a>
       </div>
-      <nav id="nav">
-        <a href="#about">About</a>
-        <a href="#events">Events</a>
-        <a href="#schedule">Schedule</a>
-        <a href="#contact">Contact</a>
-        <a href="https://www.instagram.com/breaksr4kidzhi_" target="_blank">Instagram</a>
-        <a href="./files/waiver.pdf" download>Waiver</a>
-      </nav>
-    </header>
+    </div>
+  </div>
 
-    <!-- ===== HERO ===== -->
-    <div class="hero">
-      <!-- Floating emojis -->
-      <div class="floating-notes">
-        <span class="note" style="--left:8%;  --dur:7s;   --delay:0s">🎵</span>
-        <span class="note" style="--left:22%; --dur:9s;   --delay:1s">⭐</span>
-        <span class="note" style="--left:38%; --dur:6s;   --delay:2s">🎶</span>
-        <span class="note" style="--left:52%; --dur:8s;   --delay:0.5s">🔥</span>
-        <span class="note" style="--left:67%; --dur:7.5s; --delay:3s">🎵</span>
-        <span class="note" style="--left:82%; --dur:10s;  --delay:1.5s">⭐</span>
-        <span class="note" style="--left:5%;  --dur:9s;   --delay:4s">💥</span>
-        <span class="note" style="--left:92%; --dur:6.5s; --delay:2.5s">🎶</span>
-        <span class="note" style="--left:47%; --dur:8.5s; --delay:5s">🏆</span>
+  <!-- ============================================================
+       MARQUEE
+  ============================================================ -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span>BREAK</span><span>·</span>
+      <span>GROOVE</span><span>·</span>
+      <span>MOVE</span><span>·</span>
+      <span>SHINE</span><span>·</span>
+      <span>COMPETE</span><span>·</span>
+      <span>HONOLULU</span><span>·</span>
+      <span>HIP HOP</span><span>·</span>
+      <span>B-BOY</span><span>·</span>
+      <span>B-GIRL</span><span>·</span>
+      <span>TOPROCK</span><span>·</span>
+      <span>WINDMILL</span><span>·</span>
+      <span>FREEZE</span><span>·</span>
+      <!-- duplicate for seamless loop -->
+      <span>BREAK</span><span>·</span>
+      <span>GROOVE</span><span>·</span>
+      <span>MOVE</span><span>·</span>
+      <span>SHINE</span><span>·</span>
+      <span>COMPETE</span><span>·</span>
+      <span>HONOLULU</span><span>·</span>
+      <span>HIP HOP</span><span>·</span>
+      <span>B-BOY</span><span>·</span>
+      <span>B-GIRL</span><span>·</span>
+      <span>TOPROCK</span><span>·</span>
+      <span>WINDMILL</span><span>·</span>
+      <span>FREEZE</span><span>·</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================ -->
+  <section id="about" class="section about-section reveal">
+    <div class="section-inner">
+      <span class="section-label">Who We Are</span>
+      <h2 class="section-title title-gradient">About Us</h2>
+      <div class="about-lead">
+        <p>BreaksR4Kidz is a youth breakdancing organization based in Honolulu, HI. Led by Coach Tom Solo, our mission is to empower kids through dance, build confidence, and develop discipline through the art of breaking.</p>
+        <p>Classes are open to all skill levels and offer a safe, positive environment for learning, expression, and fun.</p>
       </div>
 
-      <div class="hero-content">
-        <h2>Youth Breakdancing in Honolulu, HI<br />Coached by Tom Solo</h2>
-        <p class="hero-sub">Move. Groove. Break! 💫</p>
-        <div class="hero-cta">
-          <a href="#about"   class="btn">Learn More</a>
-          <a href="#contact" class="btn btn-red">Join Now! 🔥</a>
+      <div class="video-pair">
+        <div class="video-item">
+          <video src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1771439950/movie_d_jjcpkb.mov" controls></video>
+          <p class="video-caption">BreaksR4Kidz in action</p>
+        </div>
+        <div class="video-item">
+          <video controls>
+            <source src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1748892317/IMG_5191_slz1wr.mov" type="video/mp4" />
+          </video>
+          <p class="video-caption">Youth breakdancers at a recent session</p>
+        </div>
+      </div>
+
+      <div class="ig-grid">
+        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/reel/DPvJybiDlle/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/reel/DPvJybiDlle/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/reel/DPvJybiDlle/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A post shared by Directed By Thomas Decastro Aka Coach TomSolo (@breaksr4kidzhi_)</a></p></div></blockquote>
+        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/DWDOVemjRR5/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/p/DWDOVemjRR5/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/DWDOVemjRR5/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A post shared by Directed By Thomas Decastro Aka Coach TomSolo (@breaksr4kidzhi_)</a></p></div></blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COACH
+  ============================================================ -->
+  <section id="coach" class="section coach-section reveal">
+    <div class="section-inner">
+      <span class="section-label">Leadership</span>
+      <h2 class="section-title title-yellow">Meet the Coach</h2>
+      <div class="coach-card reveal">
+        <div class="coach-avatar">🎤</div>
+        <div class="coach-bio">
+          <h3 class="coach-name">Tom Solo</h3>
+          <span class="coach-badge">Director &amp; Head Coach</span>
+          <p>Coach Tom Solo is a veteran B-Boy and passionate educator who has dedicated himself to bringing breakdancing to Honolulu's youth. With deep roots in hip hop culture and a lifelong commitment to the art of breaking, Tom founded BreaksR4Kidz to give kids in Hawai'i a space to grow, compete, and express themselves.</p>
+          <p>Under his leadership, BreaksR4Kidz students have performed at state-level events, earned recognition in local media, and are now training for the 2027 AAU Junior Olympics — representing the spirit of Hawai'i on a national stage.</p>
+          <p class="coach-quote">"Breakdancing isn't just a sport — it's a lifestyle, a culture, and a way for every kid to find their power."</p>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- ===== ABOUT ===== -->
-    <section id="about" class="about reveal">
-      <h2>🤸 About Us</h2>
-      <p>BreaksR4Kidz is a youth breakdancing organization based in Honolulu, HI. Led by Coach Tom Solo, our mission is to empower kids through dance, build confidence, and develop discipline through the art of breaking.</p>
-      <p>Classes are open to all skill levels and offer a safe, positive environment for learning, expression, and fun.</p>
-      <div style="margin-top:1.5rem; display:flex; flex-direction:column; gap:1.5rem;">
-        <video src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1771439950/movie_d_jjcpkb.mov" controls style="width:100%; border-radius:12px;"></video>
-        <figure>
-          <video controls style="width:100%; border-radius:12px; box-shadow:0 8px 30px rgba(0,0,0,0.2);">
-            <source src="https://res.cloudinary.com/dcfagqjvf/video/upload/v1748892317/IMG_5191_slz1wr.mov" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          <figcaption style="margin-top:0.5rem; font-style:italic; color:#444; text-align:center;">
-            Youth breakdancers in action at a recent BreaksR4Kidz session.
-          </figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ===== HIGHLIGHTS ===== -->
-    <section class="highlight-section">
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/discipline_apbalo.png" alt="Discipline" />
-        <p>🎯 Breakdancing teaches kids discipline and focus.</p>
-      </div>
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/teamwork_vtlopj.png" alt="Teamwork" />
-        <p>🤝 Working together builds a strong sense of community.</p>
-      </div>
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/expression_bysa6p.png" alt="Expression" />
-        <p>🌟 Performing boosts confidence and self-esteem.</p>
-      </div>
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/fitness_yxyqc5.png" alt="Fitness" />
-        <p>💪 It's a fun way to stay physically active and healthy.</p>
-      </div>
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/confidence_lbqlpx.png" alt="Confidence" />
-        <p>🎨 Encourages artistic expression through movement.</p>
-      </div>
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/culture_gkekcl.png" alt="Culture" />
-        <p>🏆 Introduces youth to hip hop culture and its roots.</p>
-      </div>
-    </section>
-
-    <!-- ===== PARALLAX ===== -->
-    <div class="parallax">
-      <span>BreaksR4Kidz Movement</span>
-      <span class="parallax-sub">Est. Honolulu, HI</span>
+  <!-- ============================================================
+       HIGHLIGHTS (program pillars)
+  ============================================================ -->
+  <div class="highlight-section">
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/discipline_apbalo.png" alt="Discipline" />
+      <p>🎯 Breakdancing teaches kids discipline and focus.</p>
     </div>
-
-    <!-- ===== MOVE TIP WIDGET ===== -->
-    <div class="move-tip-section">
-      <h2>🕹️ B-Boy Move of the Day</h2>
-      <div class="move-tip-card" id="moveTip">Loading your move tip…</div>
-      <button class="btn" onclick="nextTip()">🎲 Get a Move Tip!</button>
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/teamwork_vtlopj.png" alt="Teamwork" />
+      <p>🤝 Working together builds a strong sense of community.</p>
     </div>
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/expression_bysa6p.png" alt="Expression" />
+      <p>🌟 Performing boosts confidence and self-esteem.</p>
+    </div>
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/fitness_yxyqc5.png" alt="Fitness" />
+      <p>💪 A fun way to stay physically active and healthy.</p>
+    </div>
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451215/confidence_lbqlpx.png" alt="Confidence" />
+      <p>🎨 Encourages artistic expression through movement.</p>
+    </div>
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1748451214/culture_gkekcl.png" alt="Culture" />
+      <p>🏆 Introduces youth to hip hop culture and its roots.</p>
+    </div>
+  </div>
 
-    <!-- ===== EVENTS ===== -->
-    <section id="events" class="events reveal">
-      <h2>🗓️ Upcoming Events</h2>
+  <!-- ============================================================
+       PARALLAX
+  ============================================================ -->
+  <div class="parallax">
+    <span class="parallax-main">BreaksR4Kidz Movement</span>
+    <span class="parallax-sub">Est. Honolulu, Hawai'i</span>
+  </div>
+
+  <!-- ============================================================
+       MOVE TIP WIDGET
+  ============================================================ -->
+  <div class="move-tip-section">
+    <span class="section-label" style="display:block;text-align:center;">Interactive</span>
+    <h2 class="section-title title-yellow" style="text-align:center;">🕹️ B-Boy Move of the Day</h2>
+    <div class="move-tip-card" id="moveTip">Loading your move tip…</div>
+    <button class="btn btn-yellow" onclick="nextTip()">🎲 Get a Move Tip!</button>
+  </div>
+
+  <!-- ============================================================
+       EVENTS
+  ============================================================ -->
+  <section id="events" class="section events-section reveal">
+    <div class="section-inner">
+      <span class="section-label">What's Coming</span>
+      <h2 class="section-title title-gradient">Upcoming Events</h2>
       <div class="events-grid">
         <div class="event-card event-card-img reveal">
           <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1773741322/IMG_1212_o1c3ji.jpg" alt="Upcoming Event" />
@@ -690,19 +872,24 @@
           <div class="event-name">AAU Junior Olympics</div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== SCHEDULE ===== -->
-    <section class="schedule reveal" id="schedule">
-      <h2>📅 Class Schedule</h2>
+  <!-- ============================================================
+       SCHEDULE
+  ============================================================ -->
+  <section id="schedule" class="section schedule-section reveal">
+    <div class="section-inner">
+      <span class="section-label">Get on the Floor</span>
+      <h2 class="section-title title-yellow">Class Schedule</h2>
       <div class="schedule-grid">
 
-        <div class="schedule-card march reveal">
+        <div class="schedule-card reveal">
           <h3>🗓 March 2026</h3>
-          <p><strong>Wednesday</strong> at Coach's Dojo</p>
+          <p><strong style="color:#fff;">Wednesday</strong> at Coach's Dojo</p>
           <span class="schedule-time">🕠 Everyone: 5:30 PM – 6:30 PM</span>
-          <p style="margin-top:0.4rem;"><strong>Sunday</strong> at Music Body and Soul Dance and Wellness Studio</p>
-          <p style="font-size:0.85rem; color:#888; margin-bottom:0.6rem;">Nā Lama Kukui, 2nd Floor · 560 N Nimitz Hwy., Suite 221</p>
+          <p style="margin-top:0.6rem;"><strong style="color:#fff;">Sunday</strong> at Music Body and Soul Dance and Wellness Studio</p>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.3); margin-bottom:0.5rem;">Nā Lama Kukui, 2nd Fl · 560 N Nimitz Hwy., Suite 221</p>
           <span class="level-badge badge-newbee">🐝 Newbies</span>
           <span class="schedule-time">2:30 PM – 3:30 PM</span>
           <span class="level-badge badge-killah">🔥 KillahBeez &amp; Yellow Jackets</span>
@@ -711,116 +898,262 @@
 
         <div class="schedule-card pricing reveal">
           <h3>💰 Pricing</h3>
-          <p><strong>$40</strong> — Walk-ins &amp; Sunday classes only</p>
-          <p style="margin-top:0.5rem;"><strong>$200</strong> — Unlimited classes</p>
-          <p style="margin-top:0.8rem; font-size:0.95rem; line-height:1.5;">Wednesdays are reserved for unlimited students. Walk-ins are Sundays only — must be scheduled with Coach in advance.</p>
+          <p><strong style="color:#fff;">$40</strong> — Walk-ins &amp; Sunday classes only</p>
+          <p style="margin-top:0.5rem;"><strong style="color:#fff;">$200</strong> — Unlimited classes</p>
+          <p style="margin-top:0.9rem; font-size:0.88rem; line-height:1.7; color:rgba(255,255,255,0.4);">Wednesdays are reserved for unlimited students. Walk-ins are Sundays only — must be scheduled with Coach in advance.</p>
         </div>
 
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== PHOTO HIGHLIGHTS ===== -->
-    <section class="highlight-section">
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439941/IMG_0626_wkpraf.jpg" alt="Hip hop stance" />
-        <p>💥 In my hip hop stance.</p>
-      </div>
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439929/IMG_0866_yrqgf3.jpg" alt="Focus" />
-        <p>👁️ Focus, vision and dedication.</p>
-      </div>
-      <div class="highlight reveal">
-        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439929/IMG_1045_xqdfrh.jpg" alt="In the news" />
-        <p>📰 We are in the news!</p>
-      </div>
-    </section>
+  <!-- ============================================================
+       PHOTO HIGHLIGHTS
+  ============================================================ -->
+  <div class="highlight-section">
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439941/IMG_0626_wkpraf.jpg" alt="Hip hop stance" />
+      <p>💥 In my hip hop stance.</p>
+    </div>
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439929/IMG_0866_yrqgf3.jpg" alt="Focus" />
+      <p>👁️ Focus, vision and dedication.</p>
+    </div>
+    <div class="highlight reveal">
+      <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1771439929/IMG_1045_xqdfrh.jpg" alt="In the news" />
+      <p>📰 We are in the news!</p>
+    </div>
+  </div>
 
-    <!-- ===== CONTACT ===== -->
-    <section id="contact" class="contact reveal">
-      <h2>📬 Contact Us</h2>
-      <p>If you have any questions or want to learn more about the program, feel free to email us directly.</p>
-      <a href="mailto:coachtomsolo@yahoo.com" class="btn" style="margin-top:1rem; font-size:1.2rem;">✉️ Email Coach Tom!</a>
-    </section>
+  <!-- ============================================================
+       CONTACT
+  ============================================================ -->
+  <section id="contact" class="section contact-section reveal">
+    <div class="section-inner">
+      <span class="section-label">Get In Touch</span>
+      <h2 class="section-title title-yellow">Contact Us</h2>
+      <p>Have questions or want to join the program? Reach out directly to Coach Tom!</p>
+      <a href="mailto:coachtomsolo@yahoo.com" class="btn btn-yellow">✉️ Email Coach Tom!</a>
+    </div>
+  </section>
 
-    <!-- ===== FOOTER ===== -->
-    <footer>
-      🕺 &copy; 2025 BreaksR4Kidz | Powered by the Community | Designed for the Youth 💃
-      <div class="instagram">
-        <a href="https://www.instagram.com/breaksr4kidzhi_" target="_blank" style="color: var(--yellow); text-decoration: none;">
-          📸 Follow us on Instagram
-        </a>
-      </div>
-      <div style="margin-top:0.5rem;">
-        <a href="./files/waiver.pdf" download style="color:#aaa; font-size:0.85rem; text-decoration:underline;">
-          Download Waiver &amp; Release Form
-        </a>
-      </div>
-    </footer>
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <div class="footer-logo">🕺 BreaksR4Kidz</div>
+    <div>Powered by the Community &nbsp;·&nbsp; Designed for the Youth &nbsp;·&nbsp; &copy; 2025</div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/breaksr4kidzhi_" target="_blank">📸 @breaksr4kidzhi_</a>
+      <a href="./files/waiver.pdf" download>📄 Waiver &amp; Release Form</a>
+    </div>
+  </footer>
 
-    <script>
-      // ---- Hamburger menu ----
-      const hamburgerMenu = document.getElementById('hamburger_menu');
-      const nav = document.getElementById('nav');
-      const icon = hamburgerMenu.querySelector('i');
-      const navLinks = nav.querySelectorAll('a');
+  <!-- Instagram embed script -->
+  <script async src="//www.instagram.com/embed.js"></script>
 
-      hamburgerMenu.addEventListener('click', () => {
-        nav.classList.toggle('active');
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-times');
-      });
+  <script>
+    // =============================================================
+    // P5.JS — NEON PARTICLE HERO CANVAS
+    // =============================================================
+    let particles = [];
+    let rings     = [];
+    let hMX = -9999, hMY = -9999;
 
-      navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          if (window.innerWidth <= 768 && nav.classList.contains('active')) {
-            nav.classList.remove('active');
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-          }
+    // Track mouse/touch globally so pointer-events:none canvas still reacts
+    window.addEventListener('mousemove', e => { hMX = e.clientX; hMY = e.clientY; });
+    window.addEventListener('touchmove', e => {
+      hMX = e.touches[0].clientX;
+      hMY = e.touches[0].clientY;
+    }, { passive: true });
+
+    function setup() {
+      const cnv = createCanvas(windowWidth, windowHeight);
+      cnv.parent('hero-canvas');
+      cnv.elt.style.pointerEvents = 'none';
+      colorMode(RGB, 255, 255, 255, 255);
+
+      const count = windowWidth < 600 ? 60 : 100;
+      for (let i = 0; i < count; i++) particles.push(new Particle(true));
+
+      // Spinning dashed ring config
+      [200, 340, 500, 680].forEach((r, i) => {
+        rings.push({
+          r,
+          angle:    random(TWO_PI),
+          speed:    (i % 2 === 0 ? 1 : -1) * random(0.004, 0.009),
+          segs:     10 + i * 5,
+          col:      i % 2 === 0 ? [255, 200, 0] : [230, 0, 0],
+          alpha:    55 - i * 8,
+          weight:   2 - i * 0.3,
         });
       });
+    }
 
-      // ---- Scroll reveal ----
-      const reveals = document.querySelectorAll('.reveal');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12 });
-      reveals.forEach(el => observer.observe(el));
+    function draw() {
+      // Trail: draw semi-transparent black each frame
+      background(0, 0, 0, 22);
 
-      // ---- B-Boy Move Tip widget ----
-      const tips = [
-        "🔄 Toprock — Get your groove on before you hit the floor!",
-        "💥 6-Step — Master the basic footwork every B-Boy needs!",
-        "🌪️ Windmill — Spin on your back and keep going and going!",
-        "🤸 Freeze — Strike a bold pose and hold it like a champ!",
-        "🦶 CC — The classic footwork to get you moving fast!",
-        "💫 Headspin — Spin on your head — harder than it looks!",
-        "🕺 Baby Freeze — Go low and make it look easy!",
-        "🔥 Power Moves — Show your strength with big spinning moves!",
-        "🎯 Downrock — Take your footwork all the way to floor level!",
-        "✈️ Airflare — Launch yourself and glide through the air!",
-        "🏆 Practice every day — even 10 minutes counts!",
-        "🎵 Feel the beat — every move starts with the music!",
-      ];
+      // --- Spinning rings ---
+      push();
+      translate(width / 2, height / 2);
+      noFill();
+      for (const ring of rings) {
+        ring.angle += ring.speed;
+        push();
+        rotate(ring.angle);
+        stroke(ring.col[0], ring.col[1], ring.col[2], ring.alpha);
+        strokeWeight(ring.weight);
+        const step = TWO_PI / ring.segs;
+        for (let a = 0; a < TWO_PI; a += step) {
+          arc(0, 0, ring.r * 2, ring.r * 2, a, a + step * 0.5);
+        }
+        pop();
+      }
+      pop();
 
-      let tipIndex = -1;
-      const moveTip = document.getElementById('moveTip');
+      // --- Particles ---
+      for (const p of particles) {
+        p.update();
+        p.show();
+      }
+    }
 
-      function nextTip() {
-        moveTip.classList.remove('pop');
-        void moveTip.offsetWidth; // trigger reflow to restart animation
-        tipIndex = (tipIndex + 1) % tips.length;
-        moveTip.textContent = tips[tipIndex];
-        moveTip.classList.add('pop');
+    function windowResized() {
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    class Particle {
+      constructor(init = false) { this.reset(init); }
+
+      reset(init = false) {
+        this.x     = random(width);
+        this.y     = init ? random(height) : height + random(40);
+        this.sz    = random(3, 12);
+        this.vy    = random(0.4, 1.8);
+        this.vx    = random(-0.3, 0.3);
+        this.alpha = random(160, 255);
+        this.angle = random(TWO_PI);
+        this.spin  = random(-0.06, 0.06);
+        this.shape = floor(random(3)); // 0=circle 1=rect 2=diamond
+        const pal  = [[255,200,0],[230,0,0],[255,255,255]];
+        this.col   = random(pal);
       }
 
-      // Show first tip automatically
-      nextTip();
-    </script>
-  </body>
+      update() {
+        // Mouse repulsion
+        const dx = this.x - hMX;
+        const dy = this.y - hMY;
+        const d  = sqrt(dx * dx + dy * dy);
+        if (d < 140 && d > 0) {
+          const f = (140 - d) / 140;
+          this.vx += (dx / d) * f * 3.5;
+          this.vy += (dy / d) * f * 3.5;
+        }
+        this.vx *= 0.95;
+        this.vy *= 0.95;
+        this.x  += this.vx;
+        this.y  -= this.vy + 0.7;
+        this.angle += this.spin;
+        if (this.y < -20 || this.x < -30 || this.x > width + 30) this.reset();
+      }
+
+      show() {
+        push();
+        translate(this.x, this.y);
+        rotate(this.angle);
+        noStroke();
+
+        // Neon glow via canvas shadow
+        drawingContext.shadowBlur  = 14;
+        drawingContext.shadowColor = `rgba(${this.col[0]},${this.col[1]},${this.col[2]},0.9)`;
+
+        fill(this.col[0], this.col[1], this.col[2], this.alpha);
+
+        if (this.shape === 0) {
+          ellipse(0, 0, this.sz);
+        } else if (this.shape === 1) {
+          rect(-this.sz / 2, -this.sz / 2, this.sz, this.sz, 2);
+        } else {
+          beginShape();
+          vertex(0, -this.sz / 2);
+          vertex(this.sz / 2, 0);
+          vertex(0, this.sz / 2);
+          vertex(-this.sz / 2, 0);
+          endShape(CLOSE);
+        }
+
+        drawingContext.shadowBlur = 0;
+        pop();
+      }
+    }
+
+    // =============================================================
+    // HAMBURGER MENU
+    // =============================================================
+    const hamburgerMenu = document.getElementById('hamburger_menu');
+    const navEl         = document.getElementById('nav');
+    const iconEl        = hamburgerMenu.querySelector('i');
+
+    hamburgerMenu.addEventListener('click', () => {
+      navEl.classList.toggle('active');
+      iconEl.classList.toggle('fa-bars');
+      iconEl.classList.toggle('fa-times');
+    });
+
+    navEl.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768 && navEl.classList.contains('active')) {
+          navEl.classList.remove('active');
+          iconEl.classList.replace('fa-times', 'fa-bars');
+        }
+      });
+    });
+
+    // =============================================================
+    // SCROLL REVEAL
+    // =============================================================
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // =============================================================
+    // B-BOY MOVE TIP
+    // =============================================================
+    const tips = [
+      "🔄 Toprock — Get your groove on before you hit the floor!",
+      "💥 6-Step — Master the basic footwork every B-Boy needs!",
+      "🌪️ Windmill — Spin on your back and keep going!",
+      "🤸 Freeze — Strike a bold pose and hold it like a champ!",
+      "🦶 CC — Classic footwork to get you moving fast!",
+      "💫 Headspin — Spin on your head — harder than it looks!",
+      "🕺 Baby Freeze — Go low and make it look easy!",
+      "🔥 Power Moves — Show your strength with big spinning moves!",
+      "🎯 Downrock — Take your footwork to floor level!",
+      "✈️ Airflare — Launch yourself and glide through the air!",
+      "🏆 Practice every day — even 10 minutes counts!",
+      "🎵 Feel the beat — every move starts with the music!",
+    ];
+
+    let tipIndex = -1;
+    const moveTipEl = document.getElementById('moveTip');
+
+    function nextTip() {
+      moveTipEl.classList.remove('pop');
+      void moveTipEl.offsetWidth;
+      tipIndex = (tipIndex + 1) % tips.length;
+      moveTipEl.textContent = tips[tipIndex];
+      moveTipEl.classList.add('pop');
+    }
+
+    nextTip();
+  </script>
+</body>
 </html>
