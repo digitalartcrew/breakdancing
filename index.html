@@ -122,24 +122,34 @@
     }
 
     .hero-title {
-      font-family: 'Bangers', cursive;
-      font-size: clamp(5.5rem, 16vw, 13rem);
-      line-height: 0.85;
-      letter-spacing: 5px;
-      color: var(--yellow);
-      text-shadow:
-        0 0 40px rgba(255,200,0,0.7),
-        0 0 90px rgba(255,200,0,0.3),
-        5px 5px 0 rgba(230,0,0,0.45);
       animation: titleSlam 1s cubic-bezier(.34,1.56,.64,1) 0.15s both;
+    }
+
+    .hero-logo {
+      width: clamp(280px, 55vw, 620px);
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      filter:
+        drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000) drop-shadow(0 0 2px #000)
+        drop-shadow(0 0 30px rgba(255,200,0,0.55)) drop-shadow(0 0 70px rgba(255,200,0,0.2));
+    }
+
+    .hero-tagline {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      letter-spacing: 8px;
+      color: var(--yellow);
+      margin-top: 0.6rem;
+      animation: fadeUp 0.8s ease 0.35s both;
     }
 
     .hero-sub {
       font-family: 'Rock Salt', cursive;
-      font-size: clamp(0.65rem, 2vw, 1rem);
+      font-size: clamp(0.55rem, 1.5vw, 0.85rem);
       letter-spacing: 7px;
-      color: rgba(255,255,255,0.6);
-      margin-top: 1.3rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.7rem;
       animation: fadeUp 0.8s ease 0.5s both;
     }
 
@@ -345,16 +355,19 @@
     }
 
     .coach-avatar {
-      width: 120px;
-      height: 120px;
+      width: 160px;
+      height: 160px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--yellow), var(--red));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
       flex-shrink: 0;
+      overflow: hidden;
       animation: avatarPulse 3.5s ease-in-out infinite;
+    }
+
+    .coach-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     @keyframes avatarPulse {
@@ -705,7 +718,10 @@
     <div id="hero-canvas"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Honolulu, Hawai'i &nbsp;·&nbsp; Est. by Coach Tom Solo</p>
-      <h1 class="hero-title">BREAKS<br>R4KIDZ</h1>
+      <h1 class="hero-title">
+        <img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1774173576/blogo_1_l7gui7.png" alt="BreaksR4Kidz" class="hero-logo" />
+      </h1>
+      <p class="hero-tagline">Hip-Hop Education</p>
       <p class="hero-sub">Move &nbsp;·&nbsp; Groove &nbsp;·&nbsp; Break</p>
       <div class="hero-cta">
         <a href="#about"   class="btn btn-yellow">Learn More</a>
@@ -787,7 +803,7 @@
       <span class="section-label">Leadership</span>
       <h2 class="section-title title-yellow">Meet the Coach</h2>
       <div class="coach-card reveal">
-        <div class="coach-avatar">🎤</div>
+        <div class="coach-avatar"><img src="https://res.cloudinary.com/dcfagqjvf/image/upload/v1774172374/coach_tom_zsg4r2.jpg" alt="Coach Tom Solo" /></div>
         <div class="coach-bio">
           <h3 class="coach-name">Tom Solo</h3>
           <span class="coach-badge">Director &amp; Head Coach</span>
